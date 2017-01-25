@@ -7,13 +7,14 @@ import SearchLayoutContainer from './components/containers/search-layout-contain
 
 // Pages
 import Home from './components/home';
-import SimpleMap from './components/maps/simpleMap';
+import SimpleMap from './components/maps/simpleMap.jsx';
 import SimpleMarker from './components/maps/simpleMarker';
 import StyledMap from './components/maps/styledMap';
 import GeolocationMap from './components/maps/geoMap';
 import KmlLayer from './components/maps/kmlLayer';
 import DirectionsMap from './components/maps/directions';
 import JsonMarker from './components/maps/jsonMarker';
+import MoYarMap from './components/maps/moYarMap';
 
 import UserListContainer from './components/containers/user-list-container';
 import UserProfileContainer from './components/containers/user-profile-container';
@@ -43,6 +44,9 @@ export default (
         </Route>
         <Route path="maps7">
             <IndexRoute component={JsonMarker} />
+        </Route>
+        <Route path="maps_mo">
+            <IndexRoute component={MoYarMap} />
         </Route>
         <Route path="users">
           <Route component={SearchLayoutContainer}>
