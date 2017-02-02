@@ -15,6 +15,7 @@ import KmlLayer from './components/maps/kmlLayer';
 import DirectionsMap from './components/maps/directions';
 import JsonMarker from './components/maps/jsonMarker';
 import MoYarMap from './components/maps/moYarMap';
+import MapMongoDb from './components/maps/MapMongoDb';
 
 import UserListContainer from './components/containers/user-list-container';
 import UserProfileContainer from './components/containers/user-profile-container';
@@ -47,6 +48,9 @@ export default (
         </Route>
         <Route path="maps_mo">
             <IndexRoute component={MoYarMap} />
+        </Route>
+        <Route path="maps_modb">
+            <IndexRoute component={MapMongoDb} />
         </Route>
         <Route path="users">
           <Route component={SearchLayoutContainer}>

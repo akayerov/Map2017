@@ -13,6 +13,10 @@ import {
 
 import mоMarker from "../../../public/data/moYarMap.json";
 
+import { connect } from 'react-redux';
+import store from '../../store';
+
+
 const ClosureListenersExampleGoogleMap = withGoogleMap(props => (
   <GoogleMap
     defaultZoom={12}
@@ -74,7 +78,8 @@ function getIcon() {
   return 'img/hospital.png';
 }
 
-export default class ClosureListenersExample extends Component {
+//export default class ClosureListenersExample extends Component {
+class ClosureListenersExample extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -86,7 +91,6 @@ export default class ClosureListenersExample extends Component {
   }
 
   handleMarkerClick(targetMarker) {
-//    debugger
     this.setState({
         markers: this.state.markers.map(marker => {
         if (marker === targetMarker) {
@@ -131,3 +135,15 @@ export default class ClosureListenersExample extends Component {
     );
   }
 }
+
+export default ClosureListenersExample;
+
+/*
+const mapStateToProps = function(store) {
+  return {
+    markers: store.geoState.markers
+  };
+};
+
+export default connect(mapStateToProps)(ClosureListenersExample);
+*/

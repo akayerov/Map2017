@@ -17,6 +17,7 @@ export default function(props) {
           <li><Link to="/maps6" activeClassName="active">SimpleMarker</Link></li>
           <li><Link to="/maps7" activeClassName="active">JsonMarker</Link></li>
           <li><Link to="/maps_mo" activeClassName="active">МО Ярославской области</Link></li>
+          <li><Link to="/maps_modb" activeClassName="active">МО Ярославской области из MongoDB</Link></li>
           <li><Link to="/users" activeClassName="active">Users</Link></li>
           <li><Link to="/widgets" activeClassName="active">Widgets</Link></li>
         </ul>
