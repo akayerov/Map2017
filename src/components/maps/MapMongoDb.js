@@ -14,7 +14,8 @@ import {
 import mоMarker from "../../../public/data/moYarMap.json";
 
 import { connect } from 'react-redux';
-import store from '../../store';
+import store from '../../store' // !!!!!!!!!!!!!! бессмысленная строка. ты не получишь значения стора так.
+import { getMOSuccess, toggleMarkerInfo } from '../../actions/geo-actions'; // import our action to fetch markers
 
 
 const ClosureListenersExampleGoogleMap = withGoogleMap(props => (
@@ -23,8 +24,8 @@ const ClosureListenersExampleGoogleMap = withGoogleMap(props => (
     defaultCenter={new google.maps.LatLng(57.63, 39.87)}
   >
     {props.markers.map((marker, index) => {
-      const onClick = () => props.onMarkerClick(marker);
-      const onCloseClick = () => props.onCloseClick(marker);
+      const onClick = () => props.onMarkerClick(marker, index); // передадим ка индекс в функцию (почему бы нет)
+      const onCloseClick = () => props.onCloseClick(marker, index);
       return (
         <Marker
           key={index}
@@ -82,43 +83,55 @@ function getIcon() {
 class ClosureListenersExample extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      markers: generateInitialMarkers(),
-    };
+    // this.state = {
+    //   markers: generateInitialMarkers(),
+    // };
     this.handleMarkerClick = this.handleMarkerClick.bind(this);
     this.handleCloseClick = this.handleCloseClick.bind(this);
+    this.toggleMarker = this.toggleMarker.bind(this);
     this.icon = getIcon();
   }
 
-  handleMarkerClick(targetMarker) {
-    this.setState({
-        markers: this.state.markers.map(marker => {
-        if (marker === targetMarker) {
-          return {
-            ...marker,
-            showInfo: true,
-          };
-        }
-        return marker;
-      }),
-    });
+  componentDidMount() {
+    this.props.getMarkers(); // получаем маркеры когда компонент встроен, так в документации рекомендуют
   }
 
-  handleCloseClick(targetMarker) {
-    this.setState({
-      markers: this.state.markers.map(marker => {
-        if (marker === targetMarker) {
-          return {
-            ...marker,
-            showInfo: false,
-          };
-        }
-        return marker;
-      }),
-    });
+  handleMarkerClick(targetMarker, targetIndex) {
+    // this.setState({
+    //     markers: this.state.markers.map(marker => {
+    //     if (marker === targetMarker) {
+    //       return {
+    //         ...marker,
+    //         showInfo: true,
+    //       };
+    //     }
+    //     return marker;
+    //   }),
+    // });
+    this.toggleMarker(targetIndex, true);
+  }
+
+  handleCloseClick(targetMarker, targetIndex) {
+    // this.setState({
+    //   markers: this.state.markers.map(marker => {
+    //     if (marker === targetMarker) {
+    //       return {
+    //         ...marker,
+    //         showInfo: false,
+    //       };
+    //     }
+    //     return marker;
+    //   }),
+    // });
+    this.toggleMarker(targetIndex, false);
+  }
+
+  toggleMarker(index, bool) {
+    this.props.toggleMarkerInfo(index, bool);
   }
 
   render() {
+    const { markers } = this.props; // берем маркеры из props
     return (
       <ClosureListenersExampleGoogleMap
         containerElement={
@@ -129,7 +142,7 @@ class ClosureListenersExample extends Component {
         }
         onMarkerClick={this.handleMarkerClick}
         onCloseClick={this.handleCloseClick}
-        markers={this.state.markers}
+        markers={markers} // вставляем
         icon = {this.icon}
       />
     );
@@ -138,12 +151,22 @@ class ClosureListenersExample extends Component {
 
 export default ClosureListenersExample;
 
-/*
+
 const mapStateToProps = function(store) {
   return {
-    markers: store.geoState.markers
+    // markers: store.geoState.markers !!!!!!!!!! geoState ветви не существует в сторе.
+    markers: store.markerState.markers || [] // видем что в редюсерах ветка названа markerState, берем маркеры отсюда, если значения нет – по дефолту пустой массив
   };
 };
 
-export default connect(mapStateToProps)(ClosureListenersExample);
-*/
+const mapDispatchToActions = { 
+  getMarkers: getMOSuccess, // мы связываем getMOSuccess и диспатчер,
+  toggleMarkerInfo: toggleMarkerInfo // новая функция показа инфо
+ } 
+// и передадим в props эту фунцию под именем getMarkers,
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToActions // для этого передаем объект в коннект вторым аргументом
+)(ClosureListenersExample);
+
