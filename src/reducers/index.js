@@ -4,14 +4,16 @@ import { combineReducers } from 'redux';
 import userReducer from './user-reducer';
 import widgetReducer from './widget-reducer';
 import searchLayoutReducer from './search-layout-reducer';
-import geoReducer from './geo-reducer';
+import mapReducer from './map-reducer';
+import counterReducer from './counter-reducer';
 
 // Combine Reducers
 var reducers = combineReducers({
     userState: userReducer,
     widgetState: widgetReducer,
     searchLayoutState: searchLayoutReducer,
-    markerState: geoReducer
+    markerState: mapReducer,
+    counterState: counterReducer
 });
 
 export default reducers;

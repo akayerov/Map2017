@@ -1,58 +1,95 @@
-// Сервер для отдачи данных из базы данных MongoDB
+import express  from 'express';
+import cors from 'cors';
+//import testMongoDB from './srcServer/testMongoDB'
+require('./srcServer/testMongoDB');
+var MongoClient = require('mongodb').MongoClient
+  , assert = require('assert');
 
-/**
- * This is just a dummy server to facilidate our React SPA examples.
- * For a more professional setup of Express, see...
- * http://expressjs.com/en/starter/generator.html
- */
+ const app = express();
+ app.use(cors());
+ app.get('/', (req, res) => {
+   res.json({
+     hello: 'JS World',
+   });
+ });
 
-import express from 'express';
-import path from 'path';
-const app = express();
+ app.get('/counter', (req, res) => {
+   getCounter();
+   res.send('Привет это //counter');
+ });
 
+ app.get('/counter/:idcounter', (req, res) => {
+   let idcounter = req.params.idcounter || 0;
+   getCounter1(Number(idcounter),  function(result) {
+       res.json(result);
+   });
+ });
 
-/**
- * Anything in public can be accessed statically without
- * this express router getting involved
- */
-
-app.use(express.static(path.join(__dirname, 'public'), {
-  dotfiles: 'ignore',
-  index: false
-}));
-
-
-/**
- * Always serve the same HTML file for all requests
- */
-
-app.get('*', function(req, res, next) {
-  console.log('Request: [GET]', req.originalUrl)
-  res.sendFile(path.resolve(__dirname, 'index.html'));
-});
-
-
-/**
- * Error Handling
- */
-
-app.use(function(req, res, next) {
-  console.log('404')
-  let err = new Error('Not Found');
-  err.status = 404;
-  next(err);
-});
-
-app.use(function(err, req, res, next) {
-  res.sendStatus(err.status || 500);
-});
+ app.get('/test', (req, res) => {
+   testMongoDb();
+   res.json({
+     hello: 'Mongo answer',
+   });
+ });
 
 
-/**
- * Start Server
- */
+ app.listen(3000, () => {
+   console.log('Your app listening on port 3000!');
+ });
 
-const port = 3000;
-app.listen(port);
 
-console.log('Serving: localhost:' + port);
+// Модули для доступа к Mongo
+ var getCounter = function() {
+   // Connection URL
+   var url = 'mongodb://localhost:27017/test';
+   // Use connect method to connect to the Server
+   MongoClient.connect(url, function(err, db) {
+     assert.equal(null, err, "Failed Connection to MongoDB Server");
+     console.log("Connected correctly to server");
+        findCounter(db, function() {
+          db.close();
+        });
+   });
+ }
+ var findCounter = function(db, callback) {
+   // Get the documents collection
+   var collection = db.collection('counter');
+   // Find some documents
+   collection.find({}).toArray(function(err, docs) {
+     assert.equal(err, null, "Error access to collection counter");
+     console.log("Found the following records");
+     console.dir(docs);
+     callback(docs);
+   });
+ }
+
+ var getCounter1 = function(id, callback) {
+   // Connection URL
+   var url = 'mongodb://localhost:27017/test';
+   var res = [];
+   // Use connect method to connect to the Server
+   MongoClient.connect(url, function(err, db) {
+     assert.equal(null, err, "Failed Connection to MongoDB Server");
+     console.log("Connected correctly to server");
+        findCounter1(db, id,  function(result) {
+          console.log(result[0]);
+//          Object.assign(res,result);
+//          console.log(res);
+          db.close();
+          callback(result[0]);
+        });
+   });
+
+ }
+ var findCounter1 = function(db, id, callback) {
+   // Get the documents collection
+   var collection = db.collection('counter');
+   // Find some documents
+//   collection.find({ idcounter: id }).toArray(function(err, docs) {
+     collection.find({ idcounter: id }).limit(1).toArray(function(err, docs) {
+     assert.equal(err, null, "Error access to collection counter");
+     console.log("Found the following records");
+     console.dir(docs);
+     callback(docs);
+   });
+ }

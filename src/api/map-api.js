@@ -1,6 +1,6 @@
 import axios from 'axios';
 import store from '../store';
-import { getMOSuccess } from '../actions/geo-actions';
+import { getMOSuccess } from '../actions/map-actions';
 
 /**
  * Get all MO
