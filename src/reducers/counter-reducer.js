@@ -21,7 +21,7 @@ const counterReducer = function(state = initialState, action) {
               didInvalidate: false
            });
       case types.GET_COUNTER_FAILTURE:
-        return Object.assign({}, state, {
+        return Object.assign({}, state, { errMessage: action.errMessage,
               isFetching: false,
               didInvalidate: true
         });

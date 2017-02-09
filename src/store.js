@@ -11,11 +11,8 @@ import { createStore, applyMiddleware } from 'redux'
 import { fetchCouter } from './actions/counter-actions'
 import rootReducer from './reducers'
 
-console.log('Store start');
 
-const loggerMiddleware = createLogger();
-
-console.log('Store start2');
+//const loggerMiddleware = createLogger();
 const store = createStore(
   rootReducer,
   window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__(),
@@ -24,10 +21,4 @@ const store = createStore(
   //  loggerMiddleware // neat middleware that logs actions
   )
 )
-console.log('Store start3');
 export default store;
-/*
-store.dispatch(fetchCouter(1)).then(() =>
-  console.log(store.getState())
-)
-*/

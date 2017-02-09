@@ -16,7 +16,10 @@ html {
 *****************************************/
 
 body {
-  margin: 3rem;
+  margin-top: 0rem;
+  margin-right: 1rem;
+  margin-bottom: 0rem;
+  margin-left: 1rem;
 }
 
 a {
@@ -150,6 +153,12 @@ form.search button{
   min-width: 800px;
 }
 
+.primary-header {
+  width: 0%;
+  height: 1rem;
+  display: block;
+}
+
 .primary-aside {
   width: 12rem;
 }
@@ -169,10 +178,6 @@ form.search button{
   background-color: #2297D1;
 }
 
-main {
-  flex: 1;
-  margin-left: 2em;
-}
 
 /**
  * Search Layout
@@ -186,7 +191,52 @@ main {
   margin: 1em 0;
 }
 
+/*
+Мои натстройки layout
+*/
+
+.fullWidth {
+  width: 100%;
+}
+.titleApp {
+  width: 100%;
+}
+
+.flex-container {
+  display: -webkit-flex;
+  display: flex;
+}
+.nav {
+  -webkit-flex-basis: 200px;
+  flex-basis: 200px;
+
+}
+.mainContext {
+  -webkit-flex-grow: 5;
+  flex-grow: 5;
+  flex: -moz-available;
+}
+
 .map1 {
   width: 750px;
   height: 400px;
+}
+
+.center {
+    width: 60px;
+    height: 60px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin: -30px 0 0 -30px;
+}
+.centerDialog {
+    width: 300px;
+    height: 100px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin: -150px 0 0 -50px;
+    border: 3px solid black;
+    border-radius: 3px;
 }

@@ -21,7 +21,13 @@ var MongoClient = require('mongodb').MongoClient
  app.get('/counter/:idcounter', (req, res) => {
    let idcounter = req.params.idcounter || 0;
    getCounter1(Number(idcounter),  function(result) {
-       res.json(result);
+       console.log("Result:");
+       console.log(result);
+       if(result == undefined) {
+          res.status(404).send('Not Found');
+       }
+       else
+         res.json(result);
    });
  });
 
@@ -69,15 +75,18 @@ var MongoClient = require('mongodb').MongoClient
    var res = [];
    // Use connect method to connect to the Server
    MongoClient.connect(url, function(err, db) {
-     assert.equal(null, err, "Failed Connection to MongoDB Server");
-     console.log("Connected correctly to server");
-        findCounter1(db, id,  function(result) {
-          console.log(result[0]);
-//          Object.assign(res,result);
-//          console.log(res);
-          db.close();
-          callback(result[0]);
-        });
+//     assert.equal(null, err, "Failed Connection to MongoDB Server");
+     if( err == null) {
+       console.log("Connected correctly to server");
+       findCounter1(db, id,  function(result) {
+         console.log(result[0]);
+         db.close();
+         callback(result[0]);
+       });
+     }
+     else {
+       callback(undefined);
+     }
    });
 
  }
@@ -85,7 +94,6 @@ var MongoClient = require('mongodb').MongoClient
    // Get the documents collection
    var collection = db.collection('counter');
    // Find some documents
-//   collection.find({ idcounter: id }).toArray(function(err, docs) {
      collection.find({ idcounter: id }).limit(1).toArray(function(err, docs) {
      assert.equal(err, null, "Error access to collection counter");
      console.log("Found the following records");

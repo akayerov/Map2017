@@ -21,6 +21,7 @@ import UserListContainer from './components/containers/user-list-container';
 import UserProfileContainer from './components/containers/user-profile-container';
 import WidgetListContainer from './components/containers/widget-list-container';
 import CounterContainer from './components/containers/counter-container';
+import ListSimple from './components/mat_ui/simlple-list';
 
 export default (
   <Router history={browserHistory}>
@@ -55,6 +56,9 @@ export default (
         </Route>
         <Route path="counter">
             <IndexRoute component={CounterContainer} />
+        </Route>
+        <Route path="listsimple">
+            <IndexRoute component={ListSimple} />
         </Route>
         <Route path="users">
           <Route component={SearchLayoutContainer}>
