@@ -30,7 +30,7 @@
     "jquery": "*",
     "keymirror": "^0.1.1",
     "less": "^2.6.0",
-    "material-ui": "^0.16.6",
+    "material-ui": "^0.16.7",
     "moment": "^2.12.0",
     "mongodb": "^2.2.22",
     "raf": "^3.3.0",

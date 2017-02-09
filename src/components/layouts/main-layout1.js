@@ -1,43 +1,84 @@
-import React from 'react';
+import { default as React,  Component } from "react";
 import { Link } from 'react-router';
 import AppBar from 'material-ui/AppBar';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import {List, ListItem} from 'material-ui/List';
+import ContentInbox from 'material-ui/svg-icons/content/inbox';
+import ActionGrade from 'material-ui/svg-icons/action/grade';
+import ContentSend from 'material-ui/svg-icons/content/send';
+import ContentDrafts from 'material-ui/svg-icons/content/drafts';
 
-// Using "Stateless Functional Components"
-export default function(props) {
-  return (
-    <MuiThemeProvider>
-    <div   className = 'fullWidth'>
-        <div className='titleApp'>
-        <AppBar
-         title="Title App"
-         iconClassNameRight="muidocs-icon-navigation-expand-more"
-        />
+import Menu from 'material-ui/Menu';
+import MenuItem from 'material-ui/MenuItem';
+import Paper from 'material-ui/Paper';
+
+import Drawer from 'material-ui/Drawer';
+
+const style = {
+  margin: 5,
+};
+
+
+export default class MainLayout extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {openL: false, openR: false};
+  }
+
+  handleToggleL = () => this.setState({openL: !this.state.openL});
+  handleToggleR = () => this.setState({openR: !this.state.openR});
+
+  render() {
+      return (
+        <MuiThemeProvider>
+        <div   className = 'fullWidth'>
+            <div className='titleApp'>
+            <AppBar
+             title="Title App"
+             iconClassNameRight="muidocs-icon-navigation-expand-more"
+              onTitleTouchTap={this.handleToggleL}
+              onLeftIconButtonTouchTap={this.handleToggleL}
+              onRightIconButtonTouchTap={this.handleToggleR}
+            />
+            </div>
+            <div className = 'flex-container'>
+            <div className='nav'>
+                <Drawer open={this.state.openL}
+                   width={300} >
+                  <Paper style={style} zDepth={3}>
+                  <MenuItem primaryText="Home" containerElement={<Link to="/" />}/>
+                  <MenuItem primaryText="Styled Map" containerElement={<Link to="/maps2" />}/>
+                  <MenuItem primaryText="МО Ярославской области Redux" containerElement={<Link to="/maps_modb" />}/>
+                  <MenuItem primaryText="MongoDB counter" containerElement={<Link to="/counter" />}/>
+                  </Paper>
+               </Drawer>
+               <Drawer open={this.state.openR}
+                  width={300}
+                  openSecondary = {true} >
+                 <Paper style={style} zDepth={3}>
+                 <MenuItem primaryText="Home" containerElement={<Link to="/" />}/>
+                 <MenuItem primaryText="Styled Map" containerElement={<Link to="/maps2" />}/>
+                 <MenuItem primaryText="МО Ярославской области Redux" containerElement={<Link to="/maps_modb" />}/>
+                 <MenuItem primaryText="MongoDB counter" containerElement={<Link to="/counter" />}/>
+                 </Paper>
+              </Drawer>
+            </div>
+            <div className='mainContext'>
+            {this.props.children}
+            </div>
+          </div>
         </div>
-        <div className = 'flex-container'>
-        <div className='nav'>
-          <ul>
-            <li><Link to="/" activeClassName="active">Home</Link></li>
-            <li><Link to="/maps1" activeClassName="active">Simple Map</Link></li>
-            <li><Link to="/maps2" activeClassName="active">Styled Map</Link></li>
-            <li><Link to="/maps3" activeClassName="active">Geolocation</Link></li>
-            <li><Link to="/maps4" activeClassName="active">Kml Layer</Link></li>
-            <li><Link to="/maps5" activeClassName="active">Directions</Link></li>
-            <li><Link to="/maps6" activeClassName="active">SimpleMarker</Link></li>
-            <li><Link to="/maps7" activeClassName="active">JsonMarker</Link></li>
-            <li><Link to="/maps_mo" activeClassName="active">МО Ярославской области</Link></li>
-            <li><Link to="/maps_modb" activeClassName="active">МО Ярославской области Redux</Link></li>
-            <li><Link to="/counter" activeClassName="active">MongoDB counter</Link></li>
-            <li><Link to="/listsimple" activeClassName="active">List Simple</Link></li>
-            <li><Link to="/users" activeClassName="active">Users</Link></li>
-            <li><Link to="/widgets" activeClassName="active">Widgets</Link></li>
-          </ul>
-        </div>
-        <div className='mainContext'>
-        {props.children}
-        </div>
-      </div>
-    </div>
-    </MuiThemeProvider>
-    );
+        </MuiThemeProvider>
+        );
+      }
 }
+/*
+<Paper style={style} zDepth={3}>
+<Menu>
+  <MenuItem primaryText="Home" containerElement={<Link to="/" />}/>
+  <MenuItem primaryText="Styled Map" containerElement={<Link to="/maps2" />}/>
+  <MenuItem primaryText="МО Ярославской области Redux" containerElement={<Link to="/maps_modb" />}/>
+  <MenuItem primaryText="MongoDB counter" containerElement={<Link to="/counter" />}/>
+</Menu>
+</Paper>
+*/

@@ -207,8 +207,8 @@ form.search button{
   display: flex;
 }
 .nav {
-  -webkit-flex-basis: 1px;
-  flex-basis: 1px;
+  -webkit-flex-basis: 200px;
+  flex-basis: 200px;
 
 }
 .mainContext {
