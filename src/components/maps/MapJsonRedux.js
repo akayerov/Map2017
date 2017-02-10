@@ -6,7 +6,7 @@ import store from '../../store' // !!!!!!!!!!!!!! бессмысленная с�
 import { getMOSuccess, toggleMarkerInfo } from '../../actions/map-actions'; // import our action to fetch markers
 
 
-const ClosureListenersExampleGoogleMap = withGoogleMap(props => (
+const MapFromJsonReduxGoogleMap = withGoogleMap(props => (
   <GoogleMap
     defaultZoom={12}
     defaultCenter={new google.maps.LatLng(57.63, 39.87)}
@@ -41,7 +41,7 @@ function getIcon() {
   return 'img/hospital.png';
 }
 
-class ClosureListenersExample extends Component {
+class MapFromJsonRedux extends Component {
   constructor(props) {
     super(props);
     this.handleMarkerClick = this.handleMarkerClick.bind(this);
@@ -69,7 +69,7 @@ class ClosureListenersExample extends Component {
   render() {
     const { markers } = this.props; // берем маркеры из props
     return (
-      <ClosureListenersExampleGoogleMap
+      <MapFromJsonReduxGoogleMap
         containerElement={
           <div style={{ height: `900px` }} />
         }
@@ -100,4 +100,4 @@ const mapDispatchToActions = {
 export default connect(
   mapStateToProps,
   mapDispatchToActions // для этого передаем объект в коннект вторым аргументом
-)(ClosureListenersExample);
+)(MapFromJsonRedux);

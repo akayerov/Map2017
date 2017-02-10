@@ -30,6 +30,21 @@ var MongoClient = require('mongodb').MongoClient
          res.json(result);
    });
  });
+ app.get('/map/:idmap', (req, res) => {
+   let idmap = req.params.idmap || 0;
+   const db = 'maps';
+   const collection= 'maps_mo';
+   getMap(db, collection, Number(idmap),  function(result) {
+//       console.log("Result:");
+//       console.log(result);
+       if(result == undefined) {
+          res.status(404).send('Not Found');
+       }
+       else
+         res.json(result);
+   });
+ });
+
 
  app.get('/test', (req, res) => {
    testMongoDb();
@@ -98,6 +113,38 @@ var MongoClient = require('mongodb').MongoClient
      assert.equal(err, null, "Error access to collection counter");
      console.log("Found the following records");
      console.dir(docs);
+     callback(docs);
+   });
+ }
+
+ var getMap = function(dbName, collectionName, id, callback) {
+   // Connection URL
+   var url = `mongodb://localhost:27017/${dbName}`;
+   var res = [];
+   // Use connect method to connect to the Server
+   MongoClient.connect(url, function(err, db) {
+//     assert.equal(null, err, "Failed Connection to MongoDB Server");
+     if( err == null) {
+       console.log("Connected correctly to server");
+       var collection = db.collection(collectionName);
+       findMap(db, collection, id,  function(result) {
+//         console.log(result[0]);
+         db.close();
+         callback(result[0]);
+       });
+     }
+     else {
+       callback(undefined);
+     }
+   });
+
+ }
+ var findMap = function(db, collection, id, callback) {
+   // Find some documents
+     collection.find({ id: id }).limit(1).toArray(function(err, docs) {
+     assert.equal(err, null, "Error access to collection counter");
+  //   console.log("Found the following records");
+  //   console.dir(docs); Command from MongoDb npm packet doc
      callback(docs);
    });
  }

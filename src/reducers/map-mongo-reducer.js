@@ -2,16 +2,12 @@ import * as types from '../actions/action-types';
 import _ from 'lodash';
 
 const initialState = {
-  markers: []
+  markers: [],
+  isFetching: false,
+  didInvalidate: false,
 };
 
 function generateInitialMarkers(moMarker) {
-
-
-  console.log('generateInitialMarkers');
-  console.log(moMarker);
-
-
   const markers = [];
   let nord = 0.0;
   let east = 0.0;
@@ -34,9 +30,22 @@ function generateInitialMarkers(moMarker) {
 const mapReducer = function(state = initialState, action) {
 
   switch(action.type) {
+    case types.GET_MAP_REQUEST:
+      return Object.assign({}, state, {
+              isFetching: true,
+              didInvalidate: false
+    });
+    case types.GET_MAP_SUCCESS:
+      return Object.assign({}, state,  { markers: generateInitialMarkers(action.markers),
+        isFetching: false,
+        didInvalidate: false
 
-    case types.GET_MO_SUCCESS:
-      return Object.assign({}, state, { markers: generateInitialMarkers(action.markers) }); // все pure преобразования лучше делать в редюсере
+    });
+    case types.GET_COUNTER_FAILTURE:
+      return Object.assign({}, state, { errMessage: action.errMessage,
+            isFetching: false,
+            didInvalidate: true
+    });
     case 'TOGGLE_MARKER':
       return Object.assign({}, state, {
         markers: [].concat(
@@ -52,5 +61,4 @@ const mapReducer = function(state = initialState, action) {
   return state;
 
 }
-
-export default mapReducer;
+export default mapMongoReducer;

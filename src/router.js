@@ -15,7 +15,8 @@ import KmlLayer from './components/maps/kmlLayer';
 import DirectionsMap from './components/maps/directions';
 import JsonMarker from './components/maps/jsonMarker';
 import MoYarMap from './components/maps/moYarMap';
-import MapMongoDb from './components/maps/MapMongoDb';
+import MapJsonRedux from './components/maps/MapJsonRedux';
+import MapMongoRedux from './components/maps/MapMongoRedux';
 
 import UserListContainer from './components/containers/user-list-container';
 import UserProfileContainer from './components/containers/user-profile-container';
@@ -51,8 +52,11 @@ export default (
         <Route path="maps_mo">
             <IndexRoute component={MoYarMap} />
         </Route>
+        <Route path="maps_mojs">
+            <IndexRoute component={MapJsonRedux} />
+        </Route>
         <Route path="maps_modb">
-            <IndexRoute component={MapMongoDb} />
+            <IndexRoute component={MapMongoRedux} />
         </Route>
         <Route path="counter">
             <IndexRoute component={CounterContainer} />

@@ -2,32 +2,29 @@ import * as types from '../actions/action-types';
 import _ from 'lodash';
 
 const initialState = {
-  markers: []
+  markers: [],
+  isFetching: false,
+  didInvalidate: false
 };
 
-function generateInitialMarkers(moMarker) {
-
-
-  console.log('generateInitialMarkers');
-  console.log(moMarker);
-
-
+function generateInitialMarkers(moMarkerObj) {
+//  console.log('MongoMap:generateInitialMarkers');
+//  console.log(moMarkerObj);
   const markers = [];
-  let nord = 0.0;
-  let east = 0.0;
-
-  for (let i = 0; i < moMarker.length; i++) {
+  for (let i = 0; i < moMarkerObj['данные'].length; i++) {
     const position = new google.maps.LatLng(
-      Number(moMarker[i].Широта),
-      Number(moMarker[i].Долгота)
+      Number( moMarkerObj['данные'][i]['Широта']),
+      Number( moMarkerObj['данные'][i]['Долгота'])
     );
     markers.push({
       position,
-      title:   moMarker[i]['МО'],
-      content: moMarker[i]['Регион'] + ' ' +  moMarker[i]['Тип МО'],
+      title:   moMarkerObj['данные'][i]['МО'],
+      content: moMarkerObj['данные'][i]['Тип МО'] ,
       showInfo: false,
     });
   }
+//  console.log('MongoMap:generateInitialMarkers:Result');
+//  console.log(markers);
   return markers;
 }
 
@@ -35,9 +32,9 @@ const mapReducer = function(state = initialState, action) {
 
   switch(action.type) {
 
-    case types.GET_MO_SUCCESS:
+    case types.GET_MAP_SUCCESS:
       return Object.assign({}, state, { markers: generateInitialMarkers(action.markers) }); // все pure преобразования лучше делать в редюсере
-    case 'TOGGLE_MARKER':
+    case 'TOGGLE_MAP_MARKER':
       return Object.assign({}, state, {
         markers: [].concat(
           state.markers.slice(0, action.payload.index),
