@@ -1,47 +1,64 @@
 /* global google */
-import { default as React,  Component } from "react";
-import { withGoogleMap, GoogleMap, Marker, InfoWindow} from "../../lib";
+import { default as React,  Component } from 'react';
+import { withGoogleMap, GoogleMap, Marker, InfoWindow } from '../../lib';
 import { connect } from 'react-redux';
-import store from '../../store' // !!!!!!!!!!!!!! бессмысленная строка. ты не получишь значения стора так.
+import store from '../../store'; // !!!!!!!!!!!!!! бессмысленная строка. ты не получишь значения стора так.
 import { fetchMap, toggleMarkerInfo } from '../../actions/map-mongo-actions'; // import our action to fetch markers
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import CircularProgress from 'material-ui/CircularProgress';
 
 
-const MapFromJsonReduxGoogleMap = withGoogleMap(props => (
-  <GoogleMap
-    defaultZoom={12}
-    defaultCenter={new google.maps.LatLng(57.63, 39.87)}
-  >
-    {props.markers.map((marker, index) => {
-      const onClick = () => props.onMarkerClick(marker, index); // передадим ка индекс в функцию (почему бы нет)
-      const onCloseClick = () => props.onCloseClick(marker, index);
-      return (
-        <Marker
-          key={index}
-          position={marker.position}
-          title={marker.title}
-          onClick={onClick}
-          icon = {props.icon}
-        >
-          {marker.showInfo && (
-            <InfoWindow onCloseClick={onCloseClick}>
-              <div>
-                <strong>{marker.content}</strong>
-                <br />
-                <em>Доп тескт this InfoWindow are actually ReactElements.</em>
-              </div>
-            </InfoWindow>
+const MapFromMongoReduxGoogleMap = withGoogleMap(props => (
+  <MuiThemeProvider>
+    <div>
+      <GoogleMap
+        defaultZoom={12}
+        defaultCenter={new google.maps.LatLng(57.63, 39.87)}
+      >
+        {props.markers.map((marker, index) => {
+          const onClick = () => props.onMarkerClick(marker, index); // передадим ка индекс в функцию (почему бы нет)
+          const onCloseClick = () => props.onCloseClick(marker, index);
+
+          return (
+            <Marker
+              key={index}
+              position={marker.position}
+              title={marker.title}
+              onClick={onClick}
+              icon = {props.icon}
+            >
+              {marker.showInfo && (
+              <InfoWindow onCloseClick={onCloseClick}>
+                <div>
+                  <strong>{marker.content}</strong>
+                  <br />
+                  <em>Доп тескт this InfoWindow are actually ReactElements.</em>
+                </div>
+              </InfoWindow>
           )}
-        </Marker>
-      );
-    })}
-  </GoogleMap>
+            </Marker>
+          );
+        })}
+      </GoogleMap>
+      { props.isFetching === true  &&
+      <div className='center'>
+        <CircularProgress size={60} thickness={7} />
+      </div>
+  }
+      {props.didInvalidate  === true &&
+      <div className='centerDialog'>
+        <p>{props.errMessage}</p>
+      </div>
+  }
+    </div>
+  </MuiThemeProvider>
 ));
 
 function getIcon() {
-  return 'img/hospital.png';
+  return 'img/hosp2.png';
 }
 
-class MapFromJsonRedux extends Component {
+class MapFromMongoRedux extends Component {
   constructor(props) {
     super(props);
     this.handleMarkerClick = this.handleMarkerClick.bind(this);
@@ -67,43 +84,56 @@ class MapFromJsonRedux extends Component {
   }
 
   render() {
-    const { markers } = this.props; // берем маркеры из props
+    const { markers, isFetching, didInvalidate, errMessage, openL, openR } = this.props; // берем маркеры из props
+    let proc_brightness = 100;
+
+    if (openL == true || openR == true)       {
+      proc_brightness = 50;
+    }
+
     const styles = {
-       height: `900px`,
-       filter: 'brightness(100%)',
+      height: '900px',
+      filter: `brightness(${proc_brightness}%)`
     };
 
     return (
-      <MapFromJsonReduxGoogleMap
+      <MapFromMongoReduxGoogleMap
         containerElement={
-          <div style={ styles } />
+          <div style={styles} />
         }
         mapElement={
-          <div style={{ height: `100%` }} />
+          <div style={{ height: '100%' }} />
         }
         onMarkerClick={this.handleMarkerClick}
         onCloseClick={this.handleCloseClick}
         markers={markers} // вставляем
+        isFetching = {isFetching}
+        didInvalidate = {didInvalidate}
+        errMessage = {errMessage}
         icon = {this.icon}
       />
     );
   }
 }
 
-const mapStateToProps = function(store) {
+const mapStateToProps = function (store) {
   return {
-//    markers: store.markerState.markers || [] // видем что в редюсерах ветка названа markerState, берем маркеры отсюда, если значения нет – по дефолту пустой массив
-    markers: store.mapState.markers || [] // видем что в редюсерах ветка названа markerState, берем маркеры отсюда, если значения нет – по дефолту пустой массив
+    markers: store.mapState.markers || [], // видем что в редюсерах ветка названа markerState, берем маркеры отсюда
+    isFetching: store.mapState.isFetching,
+    didInvalidate: store.mapState.didInvalidate,
+    errMessage: store.mapState.errMessage,
+    openL: store.sliderState.openL,
+    openR: store.sliderState.openR
   };
 };
 
 const mapDispatchToActions = {
   getMarkers: fetchMap, // мы связываем getMOSuccess и диспатчер,
-  toggleMarkerInfo: toggleMarkerInfo // новая функция показа инфо
- }
+  toggleMarkerInfo // новая функция показа инфо
+};
 // и передадим в props эту фунцию под именем getMarkers,
 
 export default connect(
   mapStateToProps,
   mapDispatchToActions // для этого передаем объект в коннект вторым аргументом
-)(MapFromJsonRedux);
+)(MapFromMongoRedux);

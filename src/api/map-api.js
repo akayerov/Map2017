@@ -7,9 +7,9 @@ import { getMOSuccess } from '../actions/map-actions';
  */
 
 export function getMo() {
-  return axios.get('http://localhost:3001/mo')
+    return axios.get('http://localhost:3001/mo')
     .then(response => {
-      store.dispatch(getMOSuccess(response.data));
-      return response;
+        store.dispatch(getMOSuccess(response.data));
+        return response;
     });
 }

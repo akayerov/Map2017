@@ -5,48 +5,50 @@ const initialState = {
   markers: [],
   isFetching: false,
   didInvalidate: false,
+  errMessage:''
 };
 
-function generateInitialMarkers(moMarker) {
+function generateInitialMarkers(moMarkerObj) {
+//  console.log('MongoMap:generateInitialMarkers');
+//  console.log(moMarkerObj);
   const markers = [];
-  let nord = 0.0;
-  let east = 0.0;
 
-  for (let i = 0; i < moMarker.length; i++) {
+  for (let i = 0; i < moMarkerObj['данные'].length; i++) {
     const position = new google.maps.LatLng(
-      Number(moMarker[i].Широта),
-      Number(moMarker[i].Долгота)
+      Number(moMarkerObj['данные'][i]['Широта']),
+      Number(moMarkerObj['данные'][i]['Долгота'])
     );
+
     markers.push({
       position,
-      title:   moMarker[i]['МО'],
-      content: moMarker[i]['Регион'] + ' ' +  moMarker[i]['Тип МО'],
-      showInfo: false,
+      title:   moMarkerObj['данные'][i]['МО'],
+      content: moMarkerObj['данные'][i]['Тип МО'],
+      showInfo: false
     });
   }
+//  console.log('MongoMap:generateInitialMarkers:Result');
+//  console.log(markers);
   return markers;
 }
 
-const mapReducer = function(state = initialState, action) {
-
-  switch(action.type) {
+const mapMongoReducer = function (state = initialState, action) {
+  switch (action.type) {
     case types.GET_MAP_REQUEST:
       return Object.assign({}, state, {
-              isFetching: true,
-              didInvalidate: false
-    });
+        isFetching: true,
+        didInvalidate: false
+      });
     case types.GET_MAP_SUCCESS:
-      return Object.assign({}, state,  { markers: generateInitialMarkers(action.markers),
+      return Object.assign({}, state, { markers: generateInitialMarkers(action.markers),
         isFetching: false,
         didInvalidate: false
-
-    });
-    case types.GET_COUNTER_FAILTURE:
+      }); // все pure преобразования лучше делать в редюсере
+    case types.GET_MAP_FAILTURE:
       return Object.assign({}, state, { errMessage: action.errMessage,
-            isFetching: false,
-            didInvalidate: true
-    });
-    case 'TOGGLE_MARKER':
+        isFetching: false,
+        didInvalidate: true
+      });
+    case 'TOGGLE_MAP_MARKER':
       return Object.assign({}, state, {
         markers: [].concat(
           state.markers.slice(0, action.payload.index),
@@ -57,8 +59,6 @@ const mapReducer = function(state = initialState, action) {
     default:
       return state;
   }
+};
 
-  return state;
-
-}
 export default mapMongoReducer;

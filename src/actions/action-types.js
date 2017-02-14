@@ -23,3 +23,6 @@ export const GET_COUNTER_FAILTURE = 'GET_COUNTER_FAILTURE';
 export const GET_MAP_REQUEST   = 'GET_MAP_REQUEST';
 export const GET_MAP_SUCCESS   = 'GET_MAP_SUCCESS';
 export const GET_MAP_FAILTURE  = 'GET_MAP_FAILTURE';
+// события по появлению /изчезновению слайдеров
+export const TOOGLE_LEFT_SLIDER  = 'TOOGLE_LEFT_SLIDER';
+export const TOOGLE_RIGHT_SLIDER  =  'TOOGLE_RIGHT_SLIDER';

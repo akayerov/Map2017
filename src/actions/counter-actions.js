@@ -1,24 +1,24 @@
 import * as types from '../actions/action-types';
-import fetch from 'isomorphic-fetch'
+import fetch from 'isomorphic-fetch';
 
 export function requestCounter(idcounter) {
-  return {
-    type: types.GET_COUNTER_REQUEST,
-    idcounter
-  };
+    return {
+        type: types.GET_COUNTER_REQUEST,
+        idcounter
+    };
 }
 export function receiveCounter(counter) {
-  return {
-    type: types.GET_COUNTER_SUCCESS,
-    counter
-  };
+    return {
+        type: types.GET_COUNTER_SUCCESS,
+        counter
+    };
 }
 
 export function failCounter(errMessage) {
-  return {
-    type: types.GET_COUNTER_FAILTURE,
-    errMessage
-  };
+    return {
+        type: types.GET_COUNTER_FAILTURE,
+        errMessage
+    };
 }
 
 // работающая функция, работаю над обработкой ошибок
@@ -58,29 +58,29 @@ export function fetchCounter(idcounter) {
     }
   }
 */
-  export function fetchCounter(idcounter) {
-     return function (dispatch) {
-       dispatch(requestCounter(idcounter))
-       return fetch(`http://localhost:3000/counter/${idcounter}`, {method: 'GET', timeout: 5000})
+export function fetchCounter(idcounter) {
+    return function (dispatch) {
+        dispatch(requestCounter(idcounter));
+        return fetch(`http://localhost:3000/counter/${idcounter}`, {method: 'GET', timeout: 5000})
          .then(function(response) {
-               console.log(response);
-               if (response.status >= 400) {
-                   dispatch(failCounter(`Сервер вернул код ошибки ${response.status}`))
-               }
-               response.json().then(json =>
+             console.log(response);
+             if (response.status >= 400) {
+                 dispatch(failCounter(`Сервер вернул код ошибки ${response.status}`));
+             }
+             response.json().then(json =>
                  dispatch(receiveCounter(json))
-               )
-          })
+               );
+         })
           .catch(function(e) {
-                console.log('Access server Error');
-                console.log(e);
-                if (!e.response) {
-                 e.message = "Сервер не отвечает！"
-                }
-                return dispatch(failCounter(e.message));
-          })
-     }
-   }
+              console.log('Access server Error');
+              console.log(e);
+              if (!e.response) {
+                  e.message = 'Сервер не отвечает！';
+              }
+              return dispatch(failCounter(e.message));
+          });
+    };
+}
 
 
 /*

@@ -4,20 +4,20 @@ import SearchLayout from '../layouts/search-layout';
 
 const mapStateToProps = function(store) {
 
-  let searchType = store.searchLayoutState.searchType;
-  let totalResults = 0;
+    let searchType = store.searchLayoutState.searchType;
+    let totalResults = 0;
 
-  if (searchType === 'users') {
-    totalResults = store.userState.users.length;
-  } else if (searchType === 'widgets') {
-    totalResults = store.widgetState.widgets.length;
-  }
+    if (searchType === 'users') {
+        totalResults = store.userState.users.length;
+    } else if (searchType === 'widgets') {
+        totalResults = store.widgetState.widgets.length;
+    }
 
-  return {
-    searchType,
-    title: store.searchLayoutState.title,
-    totalResults
-  };
+    return {
+        searchType,
+        title: store.searchLayoutState.title,
+        totalResults
+    };
 
 };
 

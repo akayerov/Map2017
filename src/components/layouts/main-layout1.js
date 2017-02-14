@@ -1,8 +1,8 @@
-import { default as React,  Component } from "react";
+import { default as React,  Component } from 'react';
 import { Link } from 'react-router';
 import AppBar from 'material-ui/AppBar';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-import {List, ListItem} from 'material-ui/List';
+import { List, ListItem } from 'material-ui/List';
 import ContentInbox from 'material-ui/svg-icons/content/inbox';
 import ActionGrade from 'material-ui/svg-icons/action/grade';
 import ContentSend from 'material-ui/svg-icons/content/send';
@@ -14,79 +14,91 @@ import Paper from 'material-ui/Paper';
 import Drawer from 'material-ui/Drawer';
 import IconButton from 'material-ui/IconButton';
 import NavigationRight from 'material-ui/svg-icons/content/filter-list';
+import { connect } from 'react-redux';
+import store from '../../store';
+import { toogleLeftSlider,  toogleRightSlider } from '../../actions/slider-actions';
+
 
 const style = {
-  margin: 5,
+  margin: 5
 };
 
 
-export default class MainLayout extends Component {
+class MainLayout extends Component {
   constructor(props) {
     super(props);
-    this.state = {openL: false, openR: false};
   }
-
-  handleToggleL = () => this.setState({openL: !this.state.openL});
-  handleToggleR = () => this.setState({openR: !this.state.openR});
+  handleToggleL = () => this.props.toogleLeft();
+  handleToggleR = () => this.props.toogleRight();
   handleToggle = () => {
-     if(this.state.openR)
-        this.handleToggleR();
-     else
-        this.handleToggleL();
+    if (this.props.openR)        {
+      this.handleToggleR();
+    }    else        {
+      this.handleToggleL();
+    }
   }
-
   render() {
-      return (
-        <MuiThemeProvider>
+    return (
+      <MuiThemeProvider>
         <div   className = 'fullWidth'>
-            <div className ='titleApp'>
+          <div className ='titleApp'>
             <AppBar
-              title="Title App"
+              title='Med Map'
               iconElementRight = {<IconButton><NavigationRight/></IconButton>}
               onTitleTouchTap = {this.handleToggle}
               onLeftIconButtonTouchTap = {this.handleToggleL}
               onRightIconButtonTouchTap = {this.handleToggleR}
             />
-            </div>
-            <div className = 'flex-container'>
+          </div>
+          <div className = 'flex-container'>
             <div className='nav'>
-                <Drawer open={this.state.openL}
-                   width={300} >
-                  <Paper style={style} zDepth={3}>
-                  <MenuItem primaryText="Home" containerElement={<Link to="/" />}/>
-                  <MenuItem primaryText="Styled Map" containerElement={<Link to="/maps2" />}/>
-                  <MenuItem primaryText="МО ЯО Redux (JSON)" containerElement={<Link to="/maps_mojs" />}/>
-                  <MenuItem primaryText="МО ЯО Redux (Mongo)" containerElement={<Link to="/maps_modb" />}/>
-                  <MenuItem primaryText="MongoDB counter" containerElement={<Link to="/counter" />}/>
-                  </Paper>
-               </Drawer>
-               <Drawer open={this.state.openR}
-                  width={300}
-                  openSecondary = {true} >
-                 <Paper style={style} zDepth={3}>
-                 <MenuItem primaryText="Home" containerElement={<Link to="/" />}/>
-                 <MenuItem primaryText="Styled Map" containerElement={<Link to="/maps2" />}/>
-                 <MenuItem primaryText="МО Ярославской области Redux" containerElement={<Link to="/maps_modb" />}/>
-                 <MenuItem primaryText="MongoDB counter" containerElement={<Link to="/counter" />}/>
-                 </Paper>
+              <Drawer open={this.props.openL}
+                width={300}
+              >
+                <div className = 'headSlider' onClick =  {this.handleToggleL} />
+                <MenuItem primaryText='Home' containerElement={<Link to='/' />}/>
+                <MenuItem primaryText='Styled Map' containerElement={<Link to='/maps2' />}/>
+                <MenuItem primaryText='МО ЯО Redux (JSON)' containerElement={<Link to='/maps_mojs' />}/>
+                <MenuItem primaryText='МО ЯО Redux (Mongo)' containerElement={<Link to='/maps_modb' />}/>
+                <MenuItem primaryText='MongoDB counter' containerElement={<Link to='/counter' />}/>
+              </Drawer>
+              <Drawer open={this.props.openR}
+                width={300}
+                openSecondary
+              >
+                <Paper style={style} zDepth={3}>
+                  <MenuItem primaryText='Home' containerElement={<Link to='/' />}/>
+                  <MenuItem primaryText='Styled Map' containerElement={<Link to='/maps2' />}/>
+                  <MenuItem primaryText='МО Ярославской области Redux' containerElement={<Link to='/maps_modb' />}/>
+                  <MenuItem primaryText='MongoDB counter' containerElement={<Link to='/counter' />}/>
+                </Paper>
               </Drawer>
             </div>
             <div className='mainContext'>
-            {this.props.children}
+              {this.props.children}
             </div>
           </div>
         </div>
-        </MuiThemeProvider>
-        );
-      }
+      </MuiThemeProvider>
+    );
+  }
 }
-/*
-<Paper style={style} zDepth={3}>
-<Menu>
-  <MenuItem primaryText="Home" containerElement={<Link to="/" />}/>
-  <MenuItem primaryText="Styled Map" containerElement={<Link to="/maps2" />}/>
-  <MenuItem primaryText="МО Ярославской области Redux" containerElement={<Link to="/maps_modb" />}/>
-  <MenuItem primaryText="MongoDB counter" containerElement={<Link to="/counter" />}/>
-</Menu>
-</Paper>
-*/
+
+const layoutStateToProps = function (store) {
+  return {
+    openL: store.sliderState.openL,
+    openR: store.sliderState.openR
+  };
+};
+
+const layoutDispatchToActions = {
+  toogleLeft : toogleLeftSlider, // мы связываем getMOSuccess и диспатчер,
+  toogleRight: toogleRightSlider
+};
+
+export default connect(
+  layoutStateToProps,
+  layoutDispatchToActions // для этого передаем объект в коннект вторым аргументом
+)(MainLayout);
+
+// export default MainLayout;

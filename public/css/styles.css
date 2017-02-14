@@ -231,12 +231,19 @@ form.search button{
     margin: -30px 0 0 -30px;
 }
 .centerDialog {
+    text-align: justify;
+    background-color:white;
     width: 300px;
-    height: 100px;
+    height: 80px;
     position: absolute;
     top: 50%;
     left: 50%;
-    margin: -150px 0 0 -50px;
+    margin: -150px 0 0 -40px;
     border: 3px solid black;
-    border-radius: 3px;
+    border-radius: 5px;
+}
+.headSlider {
+  height: 75px;
+  background-color:blue;
+
 }

@@ -1,24 +1,24 @@
 import * as types from '../actions/action-types';
 
 const initialState = {
-  searchType: '',
-  title: ''
+    searchType: '',
+    title: ''
 };
 
 const searchLayoutReducer = function(state = initialState, action) {
 
-  switch(action.type) {
+    switch(action.type) {
 
     case types.LOAD_SEARCH_LAYOUT:
-      return Object.assign({}, state, {
-        searchType: action.searchType,
-        title: action.title
-      });
+        return Object.assign({}, state, {
+            searchType: action.searchType,
+            title: action.title
+        });
 
-  }
+    }
 
-  return state;
+    return state;
 
-}
+};
 
 export default searchLayoutReducer;
