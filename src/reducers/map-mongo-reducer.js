@@ -8,29 +8,6 @@ const initialState = {
   errMessage:''
 };
 
-function generateInitialMarkers(moMarkerObj) {
-//  console.log('MongoMap:generateInitialMarkers');
-//  console.log(moMarkerObj);
-  const markers = [];
-
-  for (let i = 0; i < moMarkerObj['данные'].length; i++) {
-    const position = new google.maps.LatLng(
-      Number(moMarkerObj['данные'][i]['Широта']),
-      Number(moMarkerObj['данные'][i]['Долгота'])
-    );
-
-    markers.push({
-      position,
-      title:   moMarkerObj['данные'][i]['МО'],
-      content: moMarkerObj['данные'][i]['Тип МО'],
-      showInfo: false
-    });
-  }
-//  console.log('MongoMap:generateInitialMarkers:Result');
-//  console.log(markers);
-  return markers;
-}
-
 const mapMongoReducer = function (state = initialState, action) {
   switch (action.type) {
     case types.GET_MAP_REQUEST:
@@ -39,7 +16,7 @@ const mapMongoReducer = function (state = initialState, action) {
         didInvalidate: false
       });
     case types.GET_MAP_SUCCESS:
-      return Object.assign({}, state, { markers: generateInitialMarkers(action.markers),
+      return Object.assign({}, state, { markers: action.generateInitialMarkers(action.markers),
         isFetching: false,
         didInvalidate: false
       }); // все pure преобразования лучше делать в редюсере

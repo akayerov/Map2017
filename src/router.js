@@ -27,55 +27,55 @@ import ListSimple from './components/mat_ui/simlple-list';
 export default (
   <Router history={browserHistory}>
     <Route component={MainLayout}>
-      <Route path="/" component={Home} />
-        <Route path="maps1">
-            <IndexRoute component={SimpleMap} />
+      <Route path='/' component={Home} />
+      <Route path='maps1'>
+        <IndexRoute component={SimpleMap} />
+      </Route>
+      <Route path='maps2'>
+        <IndexRoute component={StyledMap} />
+      </Route>
+      <Route path='maps3'>
+        <IndexRoute component={GeolocationMap} />
+      </Route>
+      <Route path='maps4'>
+        <IndexRoute component={KmlLayer} />
+      </Route>
+      <Route path='maps5'>
+        <IndexRoute component={DirectionsMap} />
+      </Route>
+      <Route path='maps6'>
+        <IndexRoute component={SimpleMarker} />
+      </Route>
+      <Route path='maps7'>
+        <IndexRoute component={JsonMarker} />
+      </Route>
+      <Route path='maps_mo'>
+        <IndexRoute component={MoYarMap} />
+      </Route>
+      <Route path='maps_mojs'>
+        <IndexRoute component={MapJsonRedux} />
+      </Route>
+      <Route path='maps_modb'>
+        <IndexRoute component={MapMongoRedux} />
+      </Route>
+      <Route path='counter'>
+        <IndexRoute component={CounterContainer} />
+      </Route>
+      <Route path='listsimple'>
+        <IndexRoute component={ListSimple} />
+      </Route>
+      <Route path='users'>
+        <Route component={SearchLayoutContainer}>
+          <IndexRoute component={UserListContainer} />
         </Route>
-        <Route path="maps2">
-            <IndexRoute component={StyledMap} />
-        </Route>
-        <Route path="maps3">
-            <IndexRoute component={GeolocationMap} />
-        </Route>
-        <Route path="maps4">
-            <IndexRoute component={KmlLayer} />
-        </Route>
-        <Route path="maps5">
-            <IndexRoute component={DirectionsMap} />
-        </Route>
-        <Route path="maps6">
-            <IndexRoute component={SimpleMarker} />
-        </Route>
-        <Route path="maps7">
-            <IndexRoute component={JsonMarker} />
-        </Route>
-        <Route path="maps_mo">
-            <IndexRoute component={MoYarMap} />
-        </Route>
-        <Route path="maps_mojs">
-            <IndexRoute component={MapJsonRedux} />
-        </Route>
-        <Route path="maps_modb">
-            <IndexRoute component={MapMongoRedux} />
-        </Route>
-        <Route path="counter">
-            <IndexRoute component={CounterContainer} />
-        </Route>
-        <Route path="listsimple">
-            <IndexRoute component={ListSimple} />
-        </Route>
-        <Route path="users">
-          <Route component={SearchLayoutContainer}>
-            <IndexRoute component={UserListContainer} />
-          </Route>
-          <Route path=":userId" component={UserProfileContainer} />
-        </Route>
+        <Route path=':userId' component={UserProfileContainer} />
+      </Route>
 
-        <Route path="widgets">
-          <Route component={SearchLayoutContainer}>
-            <IndexRoute component={WidgetListContainer} />
-          </Route>
+      <Route path='widgets'>
+        <Route component={SearchLayoutContainer}>
+          <IndexRoute component={WidgetListContainer} />
         </Route>
+      </Route>
 
     </Route>
   </Router>
