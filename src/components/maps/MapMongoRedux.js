@@ -7,6 +7,8 @@ import { fetchMap, toggleMarkerInfo } from '../../actions/map-mongo-actions'; //
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import CircularProgress from 'material-ui/CircularProgress';
 
+import info2 from './info/infoMap2';
+
 
 const MapFromMongoReduxGoogleMap = withGoogleMap(props => (
   <MuiThemeProvider>
@@ -25,19 +27,13 @@ const MapFromMongoReduxGoogleMap = withGoogleMap(props => (
               position={marker.position}
               title={marker.title}
               onClick={onClick}
-              icon = {props.icon}
+              icon = {marker.icon}
             >
               {marker.showInfo && (
-              <InfoWindow onCloseClick={onCloseClick}>
-                <div>
-                  <h4>{marker.title}</h4>
-                  <p>Уровень:{marker.level}</p>
-                  <p>Тип:{marker.moType}</p>
-                  <p>ОГРН:{marker.ogrn}</p>
-                  <p>Адрес:{marker.address}</p>
-                </div>
-              </InfoWindow>
-          )}
+                <InfoWindow onCloseClick={onCloseClick}>
+                  {props.infoWindow(marker) }
+                </InfoWindow>
+              )}
             </Marker>
           );
         })}
@@ -56,22 +52,44 @@ const MapFromMongoReduxGoogleMap = withGoogleMap(props => (
   </MuiThemeProvider>
 ));
 
-function getIcon() {
-  return 'img/hosp2.png';
-}
-
 class MapFromMongoRedux extends Component {
   constructor(props) {
+  //  console.log('Constructor');
     super(props);
     this.handleMarkerClick = this.handleMarkerClick.bind(this);
     this.handleCloseClick = this.handleCloseClick.bind(this);
     this.toggleMarker = this.toggleMarker.bind(this);
-    this.icon = getIcon();
   }
 
   componentDidMount() {
-    this.props.getMarkers(1); // получаем маркеры когда компонент встроен, так в документации рекомендуют
+//    console.log('componentDidMount');
+    // передаю код карты, функцию обработки полей данных
+    this.props.getMarkers(Number(this.props.route.idMap), this.props.route.getMarker); // получаем маркеры когда компонент встроен, так в документации рекомендуют
   }
+
+  componentWillMount() {
+//    console.log('componentWillUnmount');
+  }
+  componentWillUnmount() {
+//    console.log('componentWillMount');
+  }
+  componentWillReceiveProps(newProps) {
+/*
+    console.log('componentWillReceiveProps');
+    console.log(this.props.route.idMap);
+    console.log(newProps.route.idMap);
+*/
+    // обновляю данные, когда карта меняется при смонтрированном компоненте
+    if (this.props.route.idMap != newProps.route.idMap)      {
+      this.props.getMarkers(Number(newProps.route.idMap), newProps.route.getMarker);
+    }
+  }
+
+  shouldComponentUpdate(newProps, newState) {
+  //  console.log('shouldComponentUpdate');
+    return true;
+  }
+
 
   handleMarkerClick(targetMarker, targetIndex) {
     this.toggleMarker(targetIndex, true);
@@ -112,7 +130,7 @@ class MapFromMongoRedux extends Component {
         isFetching = {isFetching}
         didInvalidate = {didInvalidate}
         errMessage = {errMessage}
-        icon = {this.icon}
+        infoWindow = {this.props.route.infoWindow}
       />
     );
   }

@@ -7,7 +7,7 @@ export function requestMap(idMap) {
     idMap
   };
 }
-export function receiveMap(markers) {
+export function receiveMap(markers, generateInitialMarkers) {
   return {
     type: types.GET_MAP_SUCCESS,
     markers,
@@ -28,7 +28,7 @@ export function toggleMarkerInfo(index, bool) {
   };
 }
 
-export function fetchMap(idMap) {
+export function fetchMap(idMap, generateInitialMarkers) {
   return function (dispatch) {
     dispatch(requestMap(idMap));
     return fetch(`http://localhost:3000/map/${idMap}`, { method: 'GET', timeout: 5000 })
@@ -39,7 +39,7 @@ export function fetchMap(idMap) {
            }
            response.json().then(json => {
 //                   console.log(json);
-             return dispatch(receiveMap(json));
+             return dispatch(receiveMap(json, generateInitialMarkers));
            }
                );
          })
@@ -52,31 +52,4 @@ export function fetchMap(idMap) {
             return dispatch(failMap(e.message));
           });
   };
-}
-
-export function generateInitialMarkers(moMarkerObj) {
-//  console.log('MongoMap:generateInitialMarkers');
-//  console.log(moMarkerObj);
-  const markers = [];
-
-  for (let i = 0; i < moMarkerObj['данные'].length; i++) {
-    const position = new google.maps.LatLng(
-      Number(moMarkerObj['данные'][i]['Широта']),
-      Number(moMarkerObj['данные'][i]['Долгота'])
-    );
-
-    markers.push({
-      position,
-      title:   moMarkerObj['данные'][i]['МО'],
-      moType  : moMarkerObj['данные'][i]['Тип МО'],
-      level   : moMarkerObj['данные'][i]['Иерархия'],
-      ogrn    : moMarkerObj['данные'][i]['ОГРН'],
-      address : `${moMarkerObj['данные'][i]['Регион']  },${
-                moMarkerObj['данные'][i]['Населенный пункт']  },${
-                moMarkerObj['данные'][i]['Улица']  },${
-                moMarkerObj['данные'][i]['Дом']}`,
-      showInfo: false
-    });
-  }
-  return markers;
 }

@@ -23,6 +23,13 @@ import UserProfileContainer from './components/containers/user-profile-container
 import WidgetListContainer from './components/containers/widget-list-container';
 import CounterContainer from './components/containers/counter-container';
 import ListSimple from './components/mat_ui/simlple-list';
+// маркеры функции
+import markerFunc2 from './components/maps/markers/markers2';
+import markerFunc3 from './components/maps/markers/markers3';
+// InfoWindow компоненты
+import info2 from './components/maps/info/infoMap2';
+import info3 from './components/maps/info/infoMap3';
+
 
 export default (
   <Router history={browserHistory}>
@@ -55,14 +62,20 @@ export default (
       <Route path='maps_mojs'>
         <IndexRoute component={MapJsonRedux} />
       </Route>
-      <Route path='maps_modb'>
-        <IndexRoute component={MapMongoRedux} />
+      <Route path='maps_modb2'>
+        <IndexRoute component={MapMongoRedux} idMap = '2'  getMarker= {markerFunc2} infoWindow={info2} />
+      </Route>
+      <Route path='maps_modb3'>
+        <IndexRoute component={MapMongoRedux} idMap = '3'  getMarker= {markerFunc3} infoWindow={info3} />
       </Route>
       <Route path='counter'>
         <IndexRoute component={CounterContainer} />
       </Route>
       <Route path='listsimple'>
         <IndexRoute component={ListSimple} />
+      </Route>
+      <Route path='info2'>
+        <IndexRoute component={info2} />
       </Route>
       <Route path='users'>
         <Route component={SearchLayoutContainer}>

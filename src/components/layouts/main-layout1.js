@@ -56,11 +56,12 @@ class MainLayout extends Component {
                 width={300}
               >
                 <div className = 'headSlider' onClick =  {this.handleToggleL} />
-                <MenuItem primaryText='Home' containerElement={<Link to='/' />}/>
-                <MenuItem primaryText='Styled Map' containerElement={<Link to='/maps2' />}/>
-                <MenuItem primaryText='МО ЯО Redux (JSON)' containerElement={<Link to='/maps_mojs' />}/>
-                <MenuItem primaryText='МО ЯО Redux (Mongo)' containerElement={<Link to='/maps_modb' />}/>
-                <MenuItem primaryText='MongoDB counter' containerElement={<Link to='/counter' />}/>
+                <MenuItem onTouchTap={this.handleToggleL} primaryText='Home' containerElement={<Link to='/' />}/>
+                <MenuItem onTouchTap={this.handleToggleL} primaryText='Styled Map' containerElement={<Link to='/maps2' />}/>
+                <MenuItem onTouchTap={this.handleToggleL} primaryText='МО ЯО Redux (JSON)' containerElement={<Link to='/maps_mojs' />}/>
+                <MenuItem onTouchTap={this.handleToggleL} primaryText='МО ЯО Redux (Mongo id=2)' containerElement={<Link to='/maps_modb2' />}/>
+                <MenuItem onTouchTap={this.handleToggleL} primaryText='МО ЯО Redux (Mongo id=3)' containerElement={<Link to='/maps_modb3' />}/>
+                <MenuItem onTouchTap={this.handleToggleL} primaryText='MongoDB counter' containerElement={<Link to='/counter' />}/>
               </Drawer>
               <Drawer open={this.props.openR}
                 width={300}
@@ -69,8 +70,9 @@ class MainLayout extends Component {
                 <Paper style={style} zDepth={3}>
                   <MenuItem primaryText='Home' containerElement={<Link to='/' />}/>
                   <MenuItem primaryText='Styled Map' containerElement={<Link to='/maps2' />}/>
-                  <MenuItem primaryText='МО Ярославской области Redux' containerElement={<Link to='/maps_modb' />}/>
+                  <MenuItem primaryText='МО Ярославской области Redux' containerElement={<Link to='/maps_modb2' />}/>
                   <MenuItem primaryText='MongoDB counter' containerElement={<Link to='/counter' />}/>
+                  <MenuItem primaryText='Info2' containerElement={<Link to='/info2' />}/>
                 </Paper>
               </Drawer>
             </div>
