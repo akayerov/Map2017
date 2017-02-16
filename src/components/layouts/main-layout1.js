@@ -1,23 +1,20 @@
 import { default as React,  Component } from 'react';
 import { Link } from 'react-router';
+import { connect } from 'react-redux';
+import { toogleLeftSlider,  toogleRightSlider } from '../../actions/slider-actions';
+
 import AppBar from 'material-ui/AppBar';
-import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-import { List, ListItem } from 'material-ui/List';
-import ContentInbox from 'material-ui/svg-icons/content/inbox';
-import ActionGrade from 'material-ui/svg-icons/action/grade';
-import ContentSend from 'material-ui/svg-icons/content/send';
-import ContentDrafts from 'material-ui/svg-icons/content/drafts';
-import Menu from 'material-ui/Menu';
 import MenuItem from 'material-ui/MenuItem';
 import Paper from 'material-ui/Paper';
-
 import Drawer from 'material-ui/Drawer';
 import IconButton from 'material-ui/IconButton';
 import NavigationRight from 'material-ui/svg-icons/content/filter-list';
-import { connect } from 'react-redux';
-import store from '../../store';
-import { toogleLeftSlider,  toogleRightSlider } from '../../actions/slider-actions';
 
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import darkBaseTheme from 'material-ui/styles/baseThemes/darkBaseTheme';
+import lightBaseTheme from 'material-ui/styles/baseThemes/lightBaseTheme';
+import getMuiTheme from 'material-ui/styles/getMuiTheme';
+import Toggle from 'material-ui/Toggle';
 
 const style = {
   margin: 5
@@ -27,6 +24,10 @@ const style = {
 class MainLayout extends Component {
   constructor(props) {
     super(props);
+    this.state = {
+      baseTheme : getMuiTheme(lightBaseTheme),
+      toggledTheme: true
+    };
   }
   handleToggleL = () => this.props.toogleLeft();
   handleToggleR = () => this.props.toogleRight();
@@ -37,9 +38,22 @@ class MainLayout extends Component {
       this.handleToggleL();
     }
   }
+
+  handleToogleTheme = () => {
+    let themeNew = null;
+
+    if (this.state.toggledTheme === true) {
+      themeNew = getMuiTheme(darkBaseTheme);
+    }    else {
+      themeNew = getMuiTheme(lightBaseTheme);
+    }
+    this.setState({ baseTheme : themeNew, toggledTheme :!this.state.toggledTheme });
+  }
+
+
   render() {
     return (
-      <MuiThemeProvider>
+      <MuiThemeProvider muiTheme={this.state.baseTheme}>
         <div   className = 'fullWidth'>
           <div className ='titleApp'>
             <AppBar
@@ -62,17 +76,19 @@ class MainLayout extends Component {
                 <MenuItem onTouchTap={this.handleToggleL} primaryText='МО ЯО Redux (Mongo id=2)' containerElement={<Link to='/maps_modb2' />}/>
                 <MenuItem onTouchTap={this.handleToggleL} primaryText='МО ЯО Redux (Mongo id=3)' containerElement={<Link to='/maps_modb3' />}/>
                 <MenuItem onTouchTap={this.handleToggleL} primaryText='MongoDB counter' containerElement={<Link to='/counter' />}/>
+
               </Drawer>
               <Drawer open={this.props.openR}
-                width={300}
                 openSecondary
               >
+                <div className = 'headSlider' onClick =  {this.handleToggleR} />
                 <Paper style={style} zDepth={3}>
+                  <Toggle
+                    label='Цвета' labelPosition = 'right' onToggle = {this.handleToogleTheme}
+                    defaultToggled={this.state.toggledTheme}
+                  />
                   <MenuItem primaryText='Home' containerElement={<Link to='/' />}/>
                   <MenuItem primaryText='Styled Map' containerElement={<Link to='/maps2' />}/>
-                  <MenuItem primaryText='МО Ярославской области Redux' containerElement={<Link to='/maps_modb2' />}/>
-                  <MenuItem primaryText='MongoDB counter' containerElement={<Link to='/counter' />}/>
-                  <MenuItem primaryText='Info2' containerElement={<Link to='/info2' />}/>
                 </Paper>
               </Drawer>
             </div>

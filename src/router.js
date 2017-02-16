@@ -29,7 +29,7 @@ import markerFunc3 from './components/maps/markers/markers3';
 // InfoWindow компоненты
 import info2 from './components/maps/info/infoMap2';
 import info3 from './components/maps/info/infoMap3';
-
+import darkStyleMap from './constants/fancyMapStyles.json';
 
 export default (
   <Router history={browserHistory}>
@@ -63,10 +63,10 @@ export default (
         <IndexRoute component={MapJsonRedux} />
       </Route>
       <Route path='maps_modb2'>
-        <IndexRoute component={MapMongoRedux} idMap = '2'  getMarker= {markerFunc2} infoWindow={info2} />
+        <IndexRoute component={MapMongoRedux} idMap = '2'  getMarker= {markerFunc2} infoWindow={info2} styleMap = {darkStyleMap}/>
       </Route>
       <Route path='maps_modb3'>
-        <IndexRoute component={MapMongoRedux} idMap = '3'  getMarker= {markerFunc3} infoWindow={info3} />
+        <IndexRoute component={MapMongoRedux} idMap = '3'  getMarker= {markerFunc3} infoWindow={info3} styleMap = {''}/>
       </Route>
       <Route path='counter'>
         <IndexRoute component={CounterContainer} />

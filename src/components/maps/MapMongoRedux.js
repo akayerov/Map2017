@@ -2,13 +2,11 @@
 import { default as React,  Component } from 'react';
 import { withGoogleMap, GoogleMap, Marker, InfoWindow } from '../../lib';
 import { connect } from 'react-redux';
-import store from '../../store'; // !!!!!!!!!!!!!! бессмысленная строка. ты не получишь значения стора так.
 import { fetchMap, toggleMarkerInfo } from '../../actions/map-mongo-actions'; // import our action to fetch markers
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import CircularProgress from 'material-ui/CircularProgress';
 
-import info2 from './info/infoMap2';
-
+// import darkStyleMap from '../../constants/fancyMapStyles.json';
 
 const MapFromMongoReduxGoogleMap = withGoogleMap(props => (
   <MuiThemeProvider>
@@ -16,6 +14,7 @@ const MapFromMongoReduxGoogleMap = withGoogleMap(props => (
       <GoogleMap
         defaultZoom={12}
         defaultCenter={new google.maps.LatLng(57.63, 39.87)}
+        options={{ styles: props.styleMap }}
       >
         {props.markers.map((marker, index) => {
           const onClick = () => props.onMarkerClick(marker, index); // передадим ка индекс в функцию (почему бы нет)
@@ -110,6 +109,13 @@ class MapFromMongoRedux extends Component {
     if (openL == true || openR == true)       {
       proc_brightness = 50;
     }
+    let styleMap = null;
+// при отсуствующем параметре или '' стиль ставится по умолчагнию
+// иначе проверим настройку темы  светлая или темная в хранилице
+
+    if (this.props.route.styleMap != undefined && this.props.route.styleMap != '')      {
+      styleMap = this.props.route.styleMap;
+    }
 
     const styles = {
       height: '900px',
@@ -131,6 +137,7 @@ class MapFromMongoRedux extends Component {
         didInvalidate = {didInvalidate}
         errMessage = {errMessage}
         infoWindow = {this.props.route.infoWindow}
+        styleMap = {styleMap}
       />
     );
   }
