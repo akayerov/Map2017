@@ -4,7 +4,7 @@ export default function (props) {
   return (
     <div>
       <h4>{props.title}</h4>
-      <p>Тип:{props.moType}</p>
+      <p>Тип:{props.typeMo}</p>
       <p>Уровень:{props.level}</p>
       <p>ОГРН:{props.ogrn}</p>
       <p>Адрес:{props.address}</p>

@@ -1,7 +1,7 @@
 import { default as React,  Component } from 'react';
 import { Link } from 'react-router';
 import { connect } from 'react-redux';
-import { toogleLeftSlider,  toogleRightSlider } from '../../actions/slider-actions';
+import { toogleLeftSlider,  toogleRightSlider, toogleTheme } from '../../actions/slider-actions';
 
 import AppBar from 'material-ui/AppBar';
 import MenuItem from 'material-ui/MenuItem';
@@ -25,8 +25,8 @@ class MainLayout extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      baseTheme : getMuiTheme(lightBaseTheme),
-      toggledTheme: true
+      baseTheme : getMuiTheme(lightBaseTheme)
+//      toggledTheme: true
     };
   }
   handleToggleL = () => this.props.toogleLeft();
@@ -42,12 +42,13 @@ class MainLayout extends Component {
   handleToogleTheme = () => {
     let themeNew = null;
 
-    if (this.state.toggledTheme === true) {
+    if (this.props.toggledTheme === true) {
       themeNew = getMuiTheme(darkBaseTheme);
     }    else {
       themeNew = getMuiTheme(lightBaseTheme);
     }
-    this.setState({ baseTheme : themeNew, toggledTheme :!this.state.toggledTheme });
+    this.setState({ baseTheme : themeNew });
+    this.props.toogleTheme();
   }
 
 
@@ -71,12 +72,8 @@ class MainLayout extends Component {
               >
                 <div className = 'headSlider' onClick =  {this.handleToggleL} />
                 <MenuItem onTouchTap={this.handleToggleL} primaryText='Home' containerElement={<Link to='/' />}/>
-                <MenuItem onTouchTap={this.handleToggleL} primaryText='Styled Map' containerElement={<Link to='/maps2' />}/>
-                <MenuItem onTouchTap={this.handleToggleL} primaryText='МО ЯО Redux (JSON)' containerElement={<Link to='/maps_mojs' />}/>
-                <MenuItem onTouchTap={this.handleToggleL} primaryText='МО ЯО Redux (Mongo id=2)' containerElement={<Link to='/maps_modb2' />}/>
-                <MenuItem onTouchTap={this.handleToggleL} primaryText='МО ЯО Redux (Mongo id=3)' containerElement={<Link to='/maps_modb3' />}/>
-                <MenuItem onTouchTap={this.handleToggleL} primaryText='MongoDB counter' containerElement={<Link to='/counter' />}/>
-
+                <MenuItem onTouchTap={this.handleToggleL} primaryText='МО ЯО Redux (Mongo id=2)' containerElement={<Link to='/map/2' />}/>
+                <MenuItem onTouchTap={this.handleToggleL} primaryText='МО ЯО Redux (Mongo id=3)' containerElement={<Link to='/map/3' />}/>
               </Drawer>
               <Drawer open={this.props.openR}
                 openSecondary
@@ -85,10 +82,8 @@ class MainLayout extends Component {
                 <Paper style={style} zDepth={3}>
                   <Toggle
                     label='Цвета' labelPosition = 'right' onToggle = {this.handleToogleTheme}
-                    defaultToggled={this.state.toggledTheme}
+                    defaultToggled={this.props.toggledTheme}
                   />
-                  <MenuItem primaryText='Home' containerElement={<Link to='/' />}/>
-                  <MenuItem primaryText='Styled Map' containerElement={<Link to='/maps2' />}/>
                 </Paper>
               </Drawer>
             </div>
@@ -105,13 +100,15 @@ class MainLayout extends Component {
 const layoutStateToProps = function (store) {
   return {
     openL: store.sliderState.openL,
-    openR: store.sliderState.openR
+    openR: store.sliderState.openR,
+    toggledTheme: store.sliderState.toggledTheme
   };
 };
 
 const layoutDispatchToActions = {
   toogleLeft : toogleLeftSlider, // мы связываем getMOSuccess и диспатчер,
-  toogleRight: toogleRightSlider
+  toogleRight: toogleRightSlider,
+  toogleTheme
 };
 
 export default connect(

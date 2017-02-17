@@ -26,3 +26,4 @@ export const GET_MAP_FAILTURE  = 'GET_MAP_FAILTURE';
 // события по появлению /изчезновению слайдеров
 export const TOOGLE_LEFT_SLIDER  = 'TOOGLE_LEFT_SLIDER';
 export const TOOGLE_RIGHT_SLIDER  =  'TOOGLE_RIGHT_SLIDER';
+export const TOOGLE_THEME = 'TOOGLE_THEME';

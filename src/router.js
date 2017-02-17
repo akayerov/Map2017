@@ -17,6 +17,7 @@ import JsonMarker from './components/maps/jsonMarker';
 import MoYarMap from './components/maps/moYarMap';
 import MapJsonRedux from './components/maps/MapJsonRedux';
 import MapMongoRedux from './components/maps/MapMongoRedux';
+import MapGoogle from './components/maps/Map';
 
 import UserListContainer from './components/containers/user-list-container';
 import UserProfileContainer from './components/containers/user-profile-container';
@@ -63,11 +64,13 @@ export default (
         <IndexRoute component={MapJsonRedux} />
       </Route>
       <Route path='maps_modb2'>
-        <IndexRoute component={MapMongoRedux} idMap = '2'  getMarker= {markerFunc2} infoWindow={info2} styleMap = {darkStyleMap}/>
+//        <IndexRoute component={MapMongoRedux} idMap = '2'  getMarker= {markerFunc2} infoWindow={info2} styleMap = {darkStyleMap}/>
+        <IndexRoute component={MapMongoRedux} idMap = '2'  getMarker= {markerFunc2} infoWindow={info2} />
       </Route>
       <Route path='maps_modb3'>
-        <IndexRoute component={MapMongoRedux} idMap = '3'  getMarker= {markerFunc3} infoWindow={info3} styleMap = {''}/>
+        <IndexRoute component={MapMongoRedux} idMap = '3'  getMarker= {markerFunc3} infoWindow={info3} />
       </Route>
+      <Route path='map/:idMap' component={MapGoogle}/> >
       <Route path='counter'>
         <IndexRoute component={CounterContainer} />
       </Route>

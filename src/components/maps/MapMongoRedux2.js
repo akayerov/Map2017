@@ -68,7 +68,7 @@ class MapFromMongoRedux extends Component {
   componentDidMount() {
 //    console.log('componentDidMount');
     // передаю код карты, функцию обработки полей данных
-    this.props.getMarkers(Number(this.props.route.idMap), this.props.route.getMarker); // получаем маркеры когда компонент встроен, так в документации рекомендуют
+    this.props.getMarkers(Number(this.props.idMap), this.props.getMarker); // получаем маркеры когда компонент встроен, так в документации рекомендуют
   }
 
   componentWillMount() {
@@ -84,8 +84,8 @@ class MapFromMongoRedux extends Component {
     console.log(newProps.route.idMap);
 */
     // обновляю данные, когда карта меняется при смонтрированном компоненте
-    if (this.props.route.idMap != newProps.route.idMap)      {
-      this.props.getMarkers(Number(newProps.route.idMap), newProps.route.getMarker);
+    if (this.props.idMap != newProps.idMap)      {
+      this.props.getMarkers(Number(newProps.idMap), newProps.getMarker);
     }
   }
 
@@ -116,8 +116,8 @@ class MapFromMongoRedux extends Component {
     }
     let styleMap = null;
 
-    if (this.props.route.styleMap != undefined)      {
-      styleMap = this.props.route.styleMap;
+    if (this.props.styleMap != undefined)      {
+      styleMap = this.props.styleMap;
     }    else if (toggledTheme === false)      {
       styleMap = darkStyleMap;
     }
@@ -141,7 +141,7 @@ class MapFromMongoRedux extends Component {
         isFetching = {isFetching}
         didInvalidate = {didInvalidate}
         errMessage = {errMessage}
-        infoWindow = {this.props.route.infoWindow}
+        infoWindow = {this.props.infoWindow}
         styleMap = {styleMap}
       />
     );

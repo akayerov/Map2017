@@ -1,3 +1,11 @@
+// Картинки вставляем в проект, чтобы использовать в Router browserHistory
+// иначе картинки не загружаются из отдельных файлов
+// было так let icon = 'img/hosp2.png';
+
+import iconHosp2 from '../../../../public/img/hosp2.png';
+import iconFap   from '../../../../public/img/hosp_fap.png';
+import iconAmb   from '../../../../public/img/hosp_amb.png';
+
 export default function generateInitialMarkers(moMarkerObj) {
 //  console.log('MongoMap:generateInitialMarkers');
 //  console.log(moMarkerObj);
@@ -8,12 +16,23 @@ export default function generateInitialMarkers(moMarkerObj) {
       Number(moMarkerObj.data[i].north),
       Number(moMarkerObj.data[i].east)
     );
+    const typeMo = moMarkerObj.data[i].typeMo;
+
+    let icon = iconHosp2;
+
+    if (typeMo.indexOf('Фельдшерско-акушерский ') !== -1 ||
+        typeMo.indexOf('Домовое') !== -1)      {
+      icon = iconFap;
+    }    else if (typeMo.indexOf('Амбулатория') !== -1)      {
+      icon = iconAmb;
+    }
+
 
     markers.push({
-      icon    :'img/hosp2.png',
+      icon,
       position,
       title:   moMarkerObj.data[i].mo,
-      moType  : moMarkerObj.data[i].typeMo,
+      typeMo,
       level   : moMarkerObj.data[i].level,
       ogrn    : moMarkerObj.data[i].ogrn,
       address : `${moMarkerObj.data[i].region  },${

@@ -1,13 +1,3 @@
-// Картинки вставляем в проект, чтобы использовать в Router browserHistory
-// иначе картинки не загружаются из отдельных файлов
-// было так let icon = 'img/hosp2.png';
-
-import p_1_1 from '../../../../public/img/p_1_1.png';
-import p_1_2 from '../../../../public/img/p_1_2.png';
-import p_1_3 from '../../../../public/img/p_1_3.png';
-import p_1_4 from '../../../../public/img/p_1_4.png';
-import p_1_5 from '../../../../public/img/p_1_5.png';
-
 export default function generateInitialMarkers(moMarkerObj) {
 //  console.log('MongoMap:generateInitialMarkers');
 //  console.log(moMarkerObj);
@@ -21,15 +11,15 @@ export default function generateInitialMarkers(moMarkerObj) {
     let icon = 'img/p_1_0.png';
 
     switch (moMarkerObj.data[i].value) {
-      case '1': icon = p_1_1;
+      case '1': icon = 'img/p_1_1.png';
         break;
-      case '2': icon = p_1_2;
+      case '2': icon = 'img/p_1_2.png';
         break;
-      case '3': icon = p_1_3;
+      case '3': icon = 'img/p_1_3.png';
         break;
-      case '4': icon = p_1_4;
+      case '4': icon = 'img/p_1_4.png';
         break;
-      case '5': icon = p_1_5;
+      case '5': icon = 'img/p_1_5.png';
         break;
       default:
         icon = 'img/p_1_0.png';
