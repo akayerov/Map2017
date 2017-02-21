@@ -4,6 +4,7 @@ import MapMongoRedux2 from './MapMongoRedux2';
 // маркеры функции
 import markerFunc2 from './markers/markers2';
 import markerFunc3 from './markers/markers3';
+import markerFunc4 from './markers/markers4';
 // InfoWindow компоненты
 import info2 from './info/infoMap2';
 import info3 from './info/infoMap3';
@@ -19,6 +20,9 @@ export default function (props) {
       info = info2;
       break;
     case '3': markerFunc = markerFunc3;
+      info = info3;
+      break;
+    case '4': markerFunc = markerFunc4;
       info = info3;
       break;
     default: markerFunc = markerFunc3;

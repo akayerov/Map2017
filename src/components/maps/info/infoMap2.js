@@ -8,6 +8,7 @@ export default function (props) {
       <p>Уровень:{props.level}</p>
       <p>ОГРН:{props.ogrn}</p>
       <p>Адрес:{props.address}</p>
+      <p>Сайт:<a href={props.site} target='_blank'>{props.site}</a></p>
     </div>
   );
 }

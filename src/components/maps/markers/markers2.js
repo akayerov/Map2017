@@ -39,6 +39,7 @@ export default function generateInitialMarkers(moMarkerObj) {
                 moMarkerObj.data[i].np  },${
                 moMarkerObj.data[i].street},${
                 moMarkerObj.data[i].house}`,
+      site : moMarkerObj.data[i].site,
       showInfo: false
     });
   }

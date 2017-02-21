@@ -2,11 +2,11 @@
 // иначе картинки не загружаются из отдельных файлов
 // было так let icon = 'img/hosp2.png';
 
-import p_1_1 from '../../../../public/img/p_2_1.png';
-import p_1_2 from '../../../../public/img/p_2_2.png';
-import p_1_3 from '../../../../public/img/p_2_3.png';
-import p_1_4 from '../../../../public/img/p_2_4.png';
-import p_1_5 from '../../../../public/img/p_2_5.png';
+import p2_1 from '../../../../public/img/p_2_1.png';
+import p2_2 from '../../../../public/img/p_2_2.png';
+import p2_3 from '../../../../public/img/p_2_3.png';
+import p2_4 from '../../../../public/img/p_2_4.png';
+import p2_5 from '../../../../public/img/p_2_5.png';
 
 export default function generateInitialMarkers(moMarkerObj) {
 //  console.log('MongoMap:generateInitialMarkers');
@@ -20,19 +20,19 @@ export default function generateInitialMarkers(moMarkerObj) {
     );
     let icon = 'img/p_1_0.png';
 
-    switch (moMarkerObj.data[i].value) {
-      case '1': icon = p_1_1;
+    switch (moMarkerObj.data[i].icon) {
+      case 'p2_1': icon = p2_1;
         break;
-      case '2': icon = p_1_2;
+      case 'p2_2': icon = p2_2;
         break;
-      case '3': icon = p_1_3;
+      case 'p2_3': icon = p2_3;
         break;
-      case '4': icon = p_1_4;
+      case 'p2_4': icon = p2_4;
         break;
-      case '5': icon = p_1_5;
+      case 'p2_5': icon = p2_5;
         break;
       default:
-        icon = 'img/p_1_0.png';
+        icon = p_1_1;
     }
     markers.push({
       icon,

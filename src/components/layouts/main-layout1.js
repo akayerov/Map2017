@@ -72,8 +72,9 @@ class MainLayout extends Component {
               >
                 <div className = 'headSlider' onClick =  {this.handleToggleL} />
                 <MenuItem onTouchTap={this.handleToggleL} primaryText='Home' containerElement={<Link to='/' />}/>
-                <MenuItem onTouchTap={this.handleToggleL} primaryText='МО ЯО Redux (Mongo id=2)' containerElement={<Link to='/map/2' />}/>
-                <MenuItem onTouchTap={this.handleToggleL} primaryText='МО ЯО Redux (Mongo id=3)' containerElement={<Link to='/map/3' />}/>
+                <MenuItem onTouchTap={this.handleToggleL} primaryText='МО ЯО (Mongo id=2)' containerElement={<Link to='/map/2' />}/>
+                <MenuItem onTouchTap={this.handleToggleL} primaryText='Показатели МО (Mongo id=3)' containerElement={<Link to='/map/3' />}/>
+                <MenuItem onTouchTap={this.handleToggleL} primaryText='Запись 2016 (Mongo id=4)' containerElement={<Link to='/map/4' />}/>
               </Drawer>
               <Drawer open={this.props.openR}
                 openSecondary

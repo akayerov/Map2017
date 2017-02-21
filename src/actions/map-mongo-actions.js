@@ -31,7 +31,7 @@ export function toggleMarkerInfo(index, bool) {
 export function fetchMap(idMap, generateInitialMarkers) {
   return function (dispatch) {
     dispatch(requestMap(idMap));
-    return fetch(`http://localhost:3000/map/${idMap}`, { method: 'GET', timeout: 5000 })
+    return fetch(`http://192.168.65.31:3000/map/${idMap}`, { method: 'GET', timeout: 5000 })
          .then((response) => {
            console.log(response);
            if (response.status >= 400) {

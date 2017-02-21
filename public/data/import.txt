@@ -1,1 +1,1 @@
-mongoimport /db:maps /collection:maps_mo /file:c:\nodeprj\opensteetmap\00-react-google-maps\public\data\moyarmapnew.json
+mongoimport /db:maps /collection:maps_mo /file:c:\nodeprj\opensteetmap\00-react-google-maps\public\data\moyarmap4.json
