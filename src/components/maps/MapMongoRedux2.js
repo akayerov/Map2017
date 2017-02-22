@@ -109,10 +109,12 @@ class MapFromMongoRedux extends Component {
 
   render() {
     const { markers, isFetching, didInvalidate, errMessage, openL, openR, toggledTheme } = this.props; // берем маркеры из props
-    let proc_brightness = 100;
+//    let proc_brightness = 100;
+    let _proc = 0;
 
     if (openL == true || openR == true)       {
-      proc_brightness = 50;
+//      proc_brightness = 50;
+      _proc = 100;
     }
     let styleMap = null;
 
@@ -124,7 +126,8 @@ class MapFromMongoRedux extends Component {
 
     const styles = {
       height: '900px',
-      filter: `brightness(${proc_brightness}%)`
+  //    filter: `brightness(${proc_brightness}%)`
+      filter: `grayscale(${_proc}%)`
     };
 
     return (

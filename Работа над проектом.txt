@@ -176,3 +176,10 @@ defaultOptions={{ styles: props.styleMap }}
 Дополнительно запросы типа /map/1 не могут загрузить ресурсы из файлов в папке
 /public/img. Решение - компоновать рисунки в bundle.js, используя оператор import
 (см. файл markers2.js)
+
+
+21.02.2017 Проблемы с routerHistory решены! См. Lessons 11 - Production Server/Readme.md
+ Reacr Router. По сути надо
+только добавить слэш в пути к bundle.js - и все.
+<script type="text/javascript" src="/build/bundle.js"></script>
+Конечно, webpack-dev-server должен запускаться с ключом --history-api-fallback

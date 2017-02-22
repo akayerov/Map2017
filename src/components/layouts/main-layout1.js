@@ -12,7 +12,8 @@ import NavigationRight from 'material-ui/svg-icons/content/filter-list';
 
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import darkBaseTheme from 'material-ui/styles/baseThemes/darkBaseTheme';
-import lightBaseTheme from 'material-ui/styles/baseThemes/lightBaseTheme';
+import lightBaseTheme from '../../themes//myLightBaseTheme';
+
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import Toggle from 'material-ui/Toggle';
 
@@ -53,10 +54,19 @@ class MainLayout extends Component {
 
 
   render() {
+    let proc_brightness = 100;
+
+    if (this.props.openL == true || this.props.openR == true)       {
+      proc_brightness = 50;
+    }
+    const styles = {
+      filter: `brightness(${proc_brightness}%)`
+    };
+
     return (
       <MuiThemeProvider muiTheme={this.state.baseTheme}>
         <div   className = 'fullWidth'>
-          <div className ='titleApp'>
+          <div className ='titleApp'  style={styles}>
             <AppBar
               title='Med Map'
               iconElementRight = {<IconButton><NavigationRight/></IconButton>}
@@ -70,7 +80,7 @@ class MainLayout extends Component {
               <Drawer open={this.props.openL}
                 width={300}
               >
-                <div className = 'headSlider' onClick =  {this.handleToggleL} />
+                <div className = 'headSlider' onClick =  {this.handleToggleL} style={{  'backgroundColor':this.state.baseTheme.palette.primary1Color }} />
                 <MenuItem onTouchTap={this.handleToggleL} primaryText='Home' containerElement={<Link to='/' />}/>
                 <MenuItem onTouchTap={this.handleToggleL} primaryText='МО ЯО (Mongo id=2)' containerElement={<Link to='/map/2' />}/>
                 <MenuItem onTouchTap={this.handleToggleL} primaryText='Показатели МО (Mongo id=3)' containerElement={<Link to='/map/3' />}/>
@@ -79,7 +89,7 @@ class MainLayout extends Component {
               <Drawer open={this.props.openR}
                 openSecondary
               >
-                <div className = 'headSlider' onClick =  {this.handleToggleR} />
+                <div className = 'headSlider' onClick =  {this.handleToggleR} style={{  'backgroundColor':this.state.baseTheme.palette.primary1Color }}/>
                 <Paper style={style} zDepth={3}>
                   <Toggle
                     label='Цвета' labelPosition = 'right' onToggle = {this.handleToogleTheme}
