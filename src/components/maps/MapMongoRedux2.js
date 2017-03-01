@@ -57,6 +57,7 @@ const MapFromMongoReduxGoogleMap = withGoogleMap(props => (
 ));
 
 class MapFromMongoRedux extends Component {
+
   constructor(props) {
   //  console.log('Constructor');
     super(props);
@@ -65,15 +66,15 @@ class MapFromMongoRedux extends Component {
     this.toggleMarker = this.toggleMarker.bind(this);
   }
 
-  componentDidMount() {
-//    console.log('componentDidMount');
-    // передаю код карты, функцию обработки полей данных
-    this.props.getMarkers(Number(this.props.idMap), this.props.getMarker); // получаем маркеры когда компонент встроен, так в документации рекомендуют
-  }
-
   componentWillMount() {
 //    console.log('componentWillUnmount');
   }
+  componentDidMount() {
+//    console.log('componentDidMount');
+    // передаю код карты, функцию обработки полей данных
+    this.props.getMarkers(Number(this.props.idMap), this.props.getMarker);
+  }
+
   componentWillUnmount() {
 //    console.log('componentWillMount');
   }
@@ -150,6 +151,12 @@ class MapFromMongoRedux extends Component {
     );
   }
 }
+
+MapFromMongoRedux.propTypes = {
+  getMarkers:  React.PropTypes.func.isRequired,
+  toggleMarkerInfo:  React.PropTypes.func.isRequired
+};
+
 
 const mapStateToProps = function (store) {
   return {

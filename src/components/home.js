@@ -9,15 +9,24 @@ const Home = React.createClass({
     return (
       <MuiThemeProvider muiTheme={getMuiTheme(darkBaseTheme)}>
         <div className='home-page'>
-          <h1>The app is now using Redux</h1>
+          <h1>Медицина на карте</h1>
           <p>
-          While the <a href='#'>CSS-Tricks article</a> for
-          this guide covers an explanation of <strong>Redux</strong>, there
-          are still many implementation details in this code that the article
-          doesn't cover. For a better understanding of those details, see
-          the <a href='https://github.com/bradwestfall/CSS-Tricks-React-Series'>Github documentation</a> for
-          this guide.
-        </p>
+             Новый взгляд на отображение информации. Наглядно и понятно.
+         </p>
+          <p>
+            <strong>Медицинские организации ЯО</strong> отображены по сведениям  <a href='https://monitoring.egisz.rosminzdrav.ru'>федерального
+            геопортала</a>
+          </p>
+          <p>
+            <strong>Запись к врачу в электронной форме 2016</strong>  по сведениям представленной отчетности
+          </p>
+          <p>
+            <strong>Показатели МО (Условно)</strong> показывает способ вывода различных показателей
+          </p>
+          <p>
+            <strong>Дополнительные возможности</strong> показывают что еще можно выводить на карту
+         </p>
+
         </div>
       </MuiThemeProvider>
     );

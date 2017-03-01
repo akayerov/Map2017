@@ -17,6 +17,9 @@ import lightBaseTheme from '../../themes//myLightBaseTheme';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import Toggle from 'material-ui/Toggle';
 
+import ArrowDropRight from 'material-ui/svg-icons/navigation-arrow-drop-right';
+import Divider from 'material-ui/Divider';
+
 const style = {
   margin: 5
 };
@@ -78,13 +81,23 @@ class MainLayout extends Component {
           <div className = 'flex-container'>
             <div className='nav'>
               <Drawer open={this.props.openL}
-                width={300}
+                width={400}
               >
                 <div className = 'headSlider' onClick =  {this.handleToggleL} style={{  'backgroundColor':this.state.baseTheme.palette.primary1Color }} />
-                <MenuItem onTouchTap={this.handleToggleL} primaryText='Home' containerElement={<Link to='/' />}/>
-                <MenuItem onTouchTap={this.handleToggleL} primaryText='МО ЯО (Mongo id=2)' containerElement={<Link to='/map/2' />}/>
-                <MenuItem onTouchTap={this.handleToggleL} primaryText='Показатели МО (Mongo id=3)' containerElement={<Link to='/map/3' />}/>
-                <MenuItem onTouchTap={this.handleToggleL} primaryText='Запись 2016 (Mongo id=4)' containerElement={<Link to='/map/4' />}/>
+                <MenuItem onTouchTap={this.handleToggleL} primaryText='О программе' containerElement={<Link to='/' />}/>
+                <MenuItem onTouchTap={this.handleToggleL} primaryText='Медицинские организации ЯО' containerElement={<Link to='/map/2' />}/>
+                <MenuItem onTouchTap={this.handleToggleL} primaryText='Запись к врачу в электронной форме 2016' containerElement={<Link to='/map/4' />}/>
+                <MenuItem onTouchTap={this.handleToggleL} primaryText='Показатели МО (Условно)' containerElement={<Link to='/map/3' />}/>
+                <Divider />
+                <MenuItem
+                  primaryText='Дополнительные возможности'
+                  rightIcon={<ArrowDropRight />}
+                  menuItems={[
+                    <MenuItem primaryText='Маршруты'  containerElement={<Link to='/maps5' />}/>,
+                    <MenuItem primaryText='Данные формата Google Earth'  containerElement={<Link to='/maps4'/>} />,
+                    <MenuItem primaryText='Геопозиционирование'  containerElement={<Link to='/maps3'/>} />
+                  ]}
+                />
               </Drawer>
               <Drawer open={this.props.openR}
                 openSecondary
