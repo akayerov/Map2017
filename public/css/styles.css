@@ -1,7 +1,7 @@
 html {
   box-sizing: border-box;
   color: #222;
-  font: 12pt Arial;
+  font-family: Roboto, sans-serif
 }
 
 *, *::before, *::after {

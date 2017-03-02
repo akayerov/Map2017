@@ -190,5 +190,46 @@ defaultOptions={{ styles: props.styleMap }}
 1.03.2017 Работа по напарвлениям: Сделано иерерхическое меню (слева)
 в отдельную ветку дерева вынесены дополнительные возможности, которые неизвестно -
 бедет ли нужны. Первая попытка запустить проекта на рабочем сервере по управлением
-Linux Ubuntu. Утсановка nodo и npm (пока неудачно, непонятно почему,
+Linux Ubuntu. Установка nodo и npm (пока неудачно, непонятно почему,
 npm не запускается для загрузки пакетов)
+Проект запустить на Ubuntu удалось (проблема с подключением отдельных файлов
+в NodeJS иссследовать отдельно), за исключением MongoDb. Надо научиться
+переносить базу с локальной ПК на сервер
+
+mongodump --db maps --out <path>
+mongorestore <path>
+Все успешно заработадло на ubuntu 192.168.65.224
+Browser http://192.168.65.224:8090 - это devserver
+Запросы с серверу http://192.168.65.224:3000
+Запросы сервера в Базе данных MongoDb   `mongodb://localhost:27017/${dbName}`;
+
+Запуск node на сервере как демонов
+см. пакеты Forever, PM2
+http://ru.stackoverflow.com/questions/141042/Как-сделать-чтобы-nodejs-сервер-работал-без-активированной-консоли
+https://habrahabr.ru/sandbox/96765/
+Выбираю для использования PM2  (nodejs)
+https://www.npmjs.com/package/pm2
+$ npm install pm2 -g            # Install PM2
+$ pm2 start app.js              # Start, Daemonize and auto-restart application (Node)
+$ pm2 stop app.js               # Stop
+$ pm2 delete app.js             # Delete
+webpack-dev-server не запускаетcя с ключами - надо попробавать сделать его настройку
+через json файл.
+Решено вообще не запускать webpack-dev-server на рабочем сервере
+
+Запуск рабочего сервера. Ставим глобально static-server
+ npm -g install static-server
+Строим проект
+ npm run build
+Запускаем
+  static-server -p 8090 <public dir>
+
+02.03.2017
+Демонизация через  PM2
+server запускается без проблем
+статический static-server посредством PM2 запускается странно.
+Вероятно, PM2 не нравится список параметров (static-server -p 8090 public)
+Без PM2 даная команда проходит нормально. Попробую запустить через модуль, в нем
+записав все параметры
+Создан модуль staticserver.js. Запуск через него прошел успешно!
+В том числе прошла демонизация через pm2 yf ubuntu

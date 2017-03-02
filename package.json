@@ -8,9 +8,9 @@
     "build": "webpack",
     "nodemon": "set NODE_PATH=./src; && nodemon server.js",
     "server": "set NODE_PATH=./src; && node server.js",
+    "static": "set NODE_PATH=./src; && node staticserver.js",
     "devserver": "webpack-dev-server --debug --history-api-fallback --hot --devtool eval-source-map --output-pathinfo --watch --colors --inline --content-base public --port 8090 --host 0.0.0.0"
   },
-
   "author": "Andrey Kayerov",
   "license": "ISC",
   "dependencies": {
@@ -45,7 +45,8 @@
     "react-tap-event-plugin": "^2.0.1",
     "redux": "^3.6.0",
     "redux-logger": "^2.8.1",
-    "redux-thunk": "^2.2.0"
+    "redux-thunk": "^2.2.0",
+    "static-server": "^2.0.4"
   },
   "devDependencies": {
     "autoprefixer-loader": "*",
